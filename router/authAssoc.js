@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/signup/associations', (req, res) => {
   res.render('signupAssociations', {
-    pageTitle: 'Signup',
+    pageTitle: 'Signup'
   });
 });
 

@@ -4,7 +4,9 @@
   "description": "Find an association",
   "main": "index.js",
   "scripts": {
-    "serve": "nodemon app.js",
+    "start": "nodemon app.js",
+    "start:dev": "NODE_ENV=development nodemon app.js",
+    "test:env": "NODE_ENV=test nodemon app.js",
     "lint": "eslint '**/*.js'",
     "lint:fix": "prettier-eslint '**/*.js' --write"
   },
@@ -12,8 +14,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "connect-redis": "^3.4.1",
+    "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "redis": "^2.8.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",

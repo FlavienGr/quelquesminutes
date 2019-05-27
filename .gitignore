@@ -7,5 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 /.changelog
 .npm/
-
-.env
+config
+dev.env
+test.env

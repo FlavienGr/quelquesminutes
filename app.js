@@ -12,11 +12,17 @@ if (process.env.NODE_ENV === 'development') {
 }
 const { SESSION_REDIS_SECRET } = process.env;
 
-const usersRouter = require('./router/authUsers');
-const assocRouter = require('./router/authAssoc');
-
 const app = express();
 
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+const usersRouter = require('./router/authUsers');
+const assocRouter = require('./router/authAssoc');
+const globalRouter = require('./router/global');
+
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, 'public')));
 const optionsRedis = {
   host: 'localhost',
   port: 6379,
@@ -24,7 +30,6 @@ const optionsRedis = {
   ttl: 86400
 };
 app.use(
-
   session({
     name: 'sid',
     store: new RedisStore(optionsRedis),
@@ -39,13 +44,9 @@ app.use(
     }
   })
 );
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
 app.use(usersRouter);
 app.use(assocRouter);
+app.use(globalRouter);
 
 // //////
 

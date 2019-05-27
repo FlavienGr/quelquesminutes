@@ -11,16 +11,20 @@ if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: './config/test.env' });
 }
 const { SESSION_REDIS_SECRET } = process.env;
-const authRouter = require('./router/auth');
+
+const usersRouter = require('./router/authUsers');
+const assocRouter = require('./router/authAssoc');
 
 const app = express();
+
 const optionsRedis = {
   host: 'localhost',
   port: 6379,
   client: redisClient,
-  ttl: 86400,
+  ttl: 86400
 };
 app.use(
+
   session({
     name: 'sid',
     store: new RedisStore(optionsRedis),
@@ -31,16 +35,17 @@ app.use(
       path: '/',
       httpOnly: true,
       secure: false,
-      maxAge: null,
-    },
-  }),
+      maxAge: null
+    }
+  })
 );
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(authRouter);
+app.use(usersRouter);
+app.use(assocRouter);
 
 // //////
 

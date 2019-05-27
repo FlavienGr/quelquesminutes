@@ -11,12 +11,19 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018
+    "ecmaVersion": 6
   },
   "rules": {
     "no-unused-vars": [
       1,
-      { "ignoreRestSiblings": true, "argsIgnorePattern": "res|next|^err" }
+      {
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "res|next|^err"
+      }
+    ],
+    "comma-dangle": [
+      "error",
+      "never"
     ]
   }
 }

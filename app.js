@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const path = require('path');
 const redisClient = require('./database/redis');
 
 if (process.env.NODE_ENV === 'development') {
@@ -34,7 +35,11 @@ app.use(
     },
   }),
 );
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 app.use(authRouter);
 
 // //////

@@ -4,16 +4,22 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const path = require('path');
 const logger = require('morgan');
-const redisClient = require('./database/redis');
 
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: './config/dev.env' });
 } else if (process.env.NODE_ENV === 'test') {
   dotenv.config({ path: './config/test.env' });
 }
-const { SESSION_REDIS_SECRET } = process.env;
+
+// /// App
 
 const app = express();
+
+// //// Databases
+const redisClient = require('./database/redis');
+require('./database/mongodb');
+
+const { SESSION_REDIS_SECRET } = process.env;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));

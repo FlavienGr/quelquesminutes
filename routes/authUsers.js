@@ -1,4 +1,5 @@
 const express = require('express');
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -7,12 +8,17 @@ router.get('/signup/users', (req, res) => {
     pageTitle: 'Signup'
   });
 });
-router.post('/signup/users', (req, res) => {
+router.post('/signup/users', async (req, res) => {
   const { email, password } = req.body;
-  console.log(email);
-  console.log(password);
-  console.log(req.body);
-  res.send('<h1>User signup</h1>');
+  if (!email || !password) throw new Error('Email or Password required');
+
+  const user = new User({ email, password });
+  try {
+    await user.save();
+    res.status(201).send(user);
+  } catch (error) {
+    res.status(400).send('error');
+  }
 });
 
 module.exports = router;

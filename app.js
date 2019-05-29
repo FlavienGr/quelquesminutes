@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const path = require('path');
+const logger = require('morgan');
 const redisClient = require('./database/redis');
 
 if (process.env.NODE_ENV === 'development') {
@@ -16,13 +17,16 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+const usersRouter = require('./routes/authUsers');
+const assocRouter = require('./routes/authAssoc');
+const globalRouter = require('./routes/global');
 
-const usersRouter = require('./router/authUsers');
-const assocRouter = require('./router/authAssoc');
-const globalRouter = require('./router/global');
+// /// DB connection
 
+app.use(logger('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
+
 const optionsRedis = {
   host: 'localhost',
   port: 6379,

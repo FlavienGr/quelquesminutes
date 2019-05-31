@@ -4,16 +4,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
   res.render('home', {
-    pageTitle: 'Home'
-  });
-});
-router.get('/login', (req, res) => {
-  res.send({ test: 'ok' });
-});
-
-router.get('/signup', (req, res) => {
-  res.render('signupPage', {
-    pageTitle: 'Signup'
+    pageTitle: 'Home',
   });
 });
 

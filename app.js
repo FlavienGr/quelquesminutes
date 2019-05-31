@@ -37,7 +37,7 @@ const optionsRedis = {
   host: 'localhost',
   port: 6379,
   client: redisClient,
-  ttl: 86400
+  ttl: 86400,
 };
 app.use(
   session({
@@ -47,16 +47,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      path: '/',
       httpOnly: true,
       secure: false,
-      maxAge: null
-    }
+      maxAge: 1000 * 60 * 60 * 2,
+    },
   })
 );
 app.use(usersRouter);
-app.use(assocRouter);
 app.use(globalRouter);
+app.use(assocRouter);
 
 // //////
 

@@ -3,22 +3,31 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-router.get('/signup/users', (req, res) => {
+router.get('/signup', (req, res) => {
   res.render('signupUsers', {
-    pageTitle: 'Signup'
+    pageTitle: 'Signup',
   });
 });
 router.post('/signup/users', async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) throw new Error('Email or Password required');
-
-  const user = new User({ email, password });
+  const { email, password, username } = req.body;
+  console.log(req);
+  if (!email && !password && !username) {
+    throw new Error('Email, Password and Username required');
+  }
+  const user = new User({ username, email, password });
   try {
     await user.save();
-    res.status(201).send(user);
+    req.session.user = user._id;
+    res.render('home', {
+      pageTitle: 'home',
+    });
   } catch (error) {
-    res.status(400).send('error');
+    res.sendStatus(400);
   }
+});
+
+router.get('/login', (req, res) => {
+  res.send({ test: 'ok' });
 });
 
 module.exports = router;

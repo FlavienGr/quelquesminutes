@@ -3,11 +3,6 @@ const User = require('../models/User');
 
 const router = express.Router();
 
-router.get('/signup', (req, res) => {
-  res.render('signupUsers', {
-    pageTitle: 'Signup',
-  });
-});
 router.post('/signup/users', async (req, res) => {
   const { email, password, username } = req.body;
   console.log(req);

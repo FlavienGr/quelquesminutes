@@ -1,27 +1,23 @@
 const express = require('express');
-const Association = require('../models/Association');
 const router = express.Router();
+const { check } = require('express-validator/check');
+const assocController = require('../controllers/authAssoc');
 
-router.get('/associations', (req, res) => {
-  res.render('signupAssociations', {
-    pageTitle: 'Signup',
-  });
-});
-router.post('/signup/associations', async (req, res) => {
-  console.log(req);
-  const { email, password, username } = req.body;
-  if (!email && !password && !username) {
-    throw new Error('Email, Password and Username required');
-  }
+// router.get('/associations', assocController.getSignup);
 
-  const association = new Association({ username, email, password });
-  try {
-    await association.save();
-    req.session.user = association._id;
-
-    res.redirect('/');
-  } catch (error) {
-    res.sendStatus(400);
-  }
-});
+router.post(
+  '/signup/associations',
+  [
+    check('email')
+      .isEmail()
+      .withMessage('Incorrect email format'),
+    check('username')
+      .isLength({ min: 5 })
+      .withMessage('Username must be at least 5 chars long'),
+    check('password')
+      .isLength({ min: 3 })
+      .withMessage('Password must be at least 5 chars long'),
+  ],
+  assocController.postSignup
+);
 module.exports = router;

@@ -17,8 +17,8 @@
                 type="checkbox"
                 id="isAssociation-check"
                 name="isAssociation"
-
-                <%= inputBackUp.checked ? checked : undefined %>
+                <% let checked = inputBackUp.checked ? "checked" : "" %>
+                <%= checked %>
                 >
                 <label class="form-check-label" for="isAssociation-check">
                   Cochez cette case si vous êtes une association

@@ -1,0 +1,13 @@
+<%- include ('./includes/head.ejs') %>
+
+<body>
+  <- include ('./includes/navigation.ejs') %>
+  <div>
+    <% if(profileData) { %>
+      profileData.username
+      profileData.email
+    <% } %>
+  </div>
+
+  <%- include('./includes/scripts.ejs') %>
+</body>

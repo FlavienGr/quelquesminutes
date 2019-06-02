@@ -23,8 +23,8 @@ const { SESSION_REDIS_SECRET } = process.env;
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-const usersRouter = require('./routes/authUsers');
-const assocRouter = require('./routes/authAssoc');
+
+const assocRouter = require('./routes/auth');
 const globalRouter = require('./routes/global');
 
 // /// DB connection
@@ -53,7 +53,6 @@ app.use(
     },
   })
 );
-app.use(usersRouter);
 app.use(globalRouter);
 app.use(assocRouter);
 

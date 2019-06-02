@@ -1,12 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const { check } = require('express-validator/check');
-const assocController = require('../controllers/authAssoc');
+const authController = require('../controllers/auth');
 
-// router.get('/associations', assocController.getSignup);
-
+router.get('/signup', authController.getSignup);
 router.post(
-  '/signup/associations',
+  '/signup',
   [
     check('email')
       .isEmail()
@@ -18,6 +17,15 @@ router.post(
       .isLength({ min: 3 })
       .withMessage('Password must be at least 5 chars long'),
   ],
-  assocController.postSignup
+  authController.postSignup
 );
+
+router.get('/login', (req, res) => {
+  res.send({ test: 'ok' });
+});
+router.get('/users/profile', authController.getProfil);
+router.get('/logout', (req, res) => {
+  req.session.destroy();
+  res.redirect('/');
+});
 module.exports = router;

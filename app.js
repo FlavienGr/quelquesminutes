@@ -4,6 +4,7 @@ const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const path = require('path');
 const logger = require('morgan');
+const flash = require('connect-flash');
 
 if (process.env.NODE_ENV === 'development') {
   dotenv.config({ path: './config/dev.env' });
@@ -53,6 +54,12 @@ app.use(
     },
   })
 );
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.isAuthenticated = req.session.isLoggedIn;
+  // res.locals.csrfToken = req.csrfToken();
+  next();
+});
 app.use(globalRouter);
 app.use(assocRouter);
 

@@ -1,6 +1,6 @@
-<%- include('./includes/head.ejs') %>
+<%- include('../includes/head.ejs') %>
 <body>
-  <%- include('./includes/navigation.ejs') %>
+  <%- include('../includes/navigation.ejs') %>
 <div class="container">
   <% if(errors) { %>
     <div class="alert alert-danger" role="alert">
@@ -9,7 +9,7 @@
   <% } %>
   <div class="row">
     <div class="col-6 mx-auto">
-        <form id="signup-form" action="/signup" method="post" novalidate>
+        <form action="/signup" method="post" novalidate>
           <div class="form-group">
               <div class="form-check">
                 <input
@@ -67,5 +67,5 @@
   </div>
 </div>
 
-  <%- include('./includes/scripts.ejs') %>
+  <%- include('../includes/scripts.ejs') %>
 </body>

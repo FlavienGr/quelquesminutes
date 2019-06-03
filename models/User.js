@@ -7,40 +7,40 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
-      unique: true,
+      unique: true
     },
     email: {
       type: String,
       required: true,
       unique: true,
-      trim: true,
+      trim: true
     },
     password: {
       type: String,
-      required: true,
+      required: true
     },
     address: {
       street: {
         type: String,
         trim: true,
-        lowercase: true,
+        lowercase: true
       },
       city: {
         type: String,
         trim: true,
-        lowercase: true,
+        lowercase: true
       },
       cp: {
         type: String,
-        trim: true,
-      },
-    },
+        trim: true
+      }
+    }
   },
   { timestamps: true }
 );
 
 // eslint-disable-next-line func-names
-UserSchema.pre('save', async function(next) {
+UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {
     this.password = await bcrypt.hash(this.password, 12);
   }

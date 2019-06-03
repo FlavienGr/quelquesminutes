@@ -1,4 +1,5 @@
 const express = require('express');
+
 const router = express.Router();
 const { check } = require('express-validator/check');
 const authController = require('../controllers/auth');
@@ -15,7 +16,7 @@ router.post(
       .withMessage('Username must be at least 5 chars long'),
     check('password')
       .isLength({ min: 3 })
-      .withMessage('Password must be at least 5 chars long'),
+      .withMessage('Password must be at least 5 chars long')
   ],
   authController.postSignup
 );
@@ -28,7 +29,7 @@ router.post(
       .withMessage('Incorrect email format'),
     check('password')
       .isLength({ min: 3 })
-      .withMessage('Password must be at least 5 chars long'),
+      .withMessage('Password must be at least 5 chars long')
   ],
   authController.postLogin
 );

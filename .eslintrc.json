@@ -22,6 +22,7 @@
       }
     ],
     "comma-dangle": ["error", "never"],
-    "no-underscore-dangle": ["error", "never"]
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "consistent-return": ["error", { "treatUndefinedAsUnspecified": true }]
   }
 }

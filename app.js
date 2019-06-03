@@ -38,7 +38,7 @@ const optionsRedis = {
   host: 'localhost',
   port: 6379,
   client: redisClient,
-  ttl: 86400,
+  ttl: 86400
 };
 app.use(
   session({
@@ -50,8 +50,8 @@ app.use(
     cookie: {
       httpOnly: true,
       secure: false,
-      maxAge: 1000 * 60 * 60 * 2,
-    },
+      maxAge: 1000 * 60 * 60 * 2
+    }
   })
 );
 app.use(flash());

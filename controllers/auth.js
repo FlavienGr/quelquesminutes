@@ -1,17 +1,19 @@
-const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator/check');
+const User = require('../models/User');
 
 exports.getSignup = (req, res) => {
   res.render('auth/signup', {
     pageTitle: 'Signup',
     errors: '',
-    inputBackUp: {},
+    inputBackUp: {}
   });
 };
 
 exports.postSignup = async (req, res) => {
-  const { username, email, password, isAssociation } = req.body;
+  const {
+    username, email, password, isAssociation
+  } = req.body;
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -22,8 +24,8 @@ exports.postSignup = async (req, res) => {
         username,
         email,
         password,
-        checked: isAssociation ? true : false,
-      },
+        checked: !!isAssociation
+      }
     });
   }
   const user = new User({ username, email, password });
@@ -31,18 +33,16 @@ exports.postSignup = async (req, res) => {
     await user.save();
     req.session.user = user._id;
     req.session.isLoggedIn = true;
-
-    // res.render('home', {
-    //   pageTitle: 'Home',
-    // });
-    res.redirect('/');
+    return res.redirect('/');
   } catch (error) {
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
 };
 exports.getLogin = (req, res) => {
   let errorFlashMessage = req.flash('error');
+
   if (errorFlashMessage.length > 0) {
+    // eslint-disable-next-line prefer-destructuring
     errorFlashMessage = errorFlashMessage[0];
   } else {
     errorFlashMessage = null;
@@ -50,9 +50,10 @@ exports.getLogin = (req, res) => {
   res.render('auth/login', {
     pageTitle: 'Login',
     errors: errorFlashMessage,
-    inputBackUp: {},
+    inputBackUp: {}
   });
 };
+// eslint-disable-next-line consistent-return
 exports.postLogin = async (req, res) => {
   const { email, password } = req.body;
   const errors = validationResult(req);
@@ -62,8 +63,8 @@ exports.postLogin = async (req, res) => {
       errors: errors.array()[0].msg,
       inputBackUp: {
         email,
-        password,
-      },
+        password
+      }
     });
   }
 
@@ -83,14 +84,13 @@ exports.postLogin = async (req, res) => {
     req.session.isLoggedIn = true;
     res.redirect('/');
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.log(error);
     res.sendStatus(400);
   }
 };
 exports.getProfil = async (req, res) => {
-  console.log(req.session);
   const id = req.session.user;
-  console.log(id);
 
   const user = await User.findById(id);
 
@@ -102,8 +102,8 @@ exports.getProfil = async (req, res) => {
     inputBackUp: {},
     profileData: {
       username: user.username,
-      email: user.email,
-    },
+      email: user.email
+    }
   });
 };
 

@@ -28,7 +28,22 @@ exports.postSignup = async (req, res) => {
       }
     });
   }
-  const user = new User({ username, email, password });
+  let user;
+  if (isAssociation) {
+    user = new User({
+      username,
+      email,
+      password,
+      isAssociation: true
+    });
+  } else {
+    user = new User({
+      username,
+      email,
+      password,
+      isAssociation: false
+    });
+  }
   try {
     await user.save();
     req.session.user = user._id;

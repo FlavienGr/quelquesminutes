@@ -27,7 +27,7 @@ app.set('views', path.join(__dirname, 'views'));
 
 const assocRouter = require('./routes/auth');
 const globalRouter = require('./routes/global');
-
+const profileRouter = require('./routes/profile');
 // /// DB connection
 
 app.use(logger('dev'));
@@ -62,6 +62,7 @@ app.use((req, res, next) => {
 });
 app.use(globalRouter);
 app.use(assocRouter);
+app.use(profileRouter);
 
 // //////
 

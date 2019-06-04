@@ -89,26 +89,6 @@ exports.postLogin = async (req, res) => {
     res.sendStatus(400);
   }
 };
-exports.getProfil = async (req, res) => {
-  const id = req.session.user;
-  try {
-    const user = await User.findById(id);
-    if (!user) {
-      req.flash('error', 'unable to login you');
-      return res.redirect('/login');
-    }
-    return res.render('profile/profile', {
-      pageTitle: 'profil',
-      errors: '',
-      profileData: {
-        username: user.username,
-        email: user.email
-      }
-    });
-  } catch (error) {
-    return res.sendStatus(400);
-  }
-};
 
 exports.getLogout = async (req, res) => {
   await req.session.destroy();

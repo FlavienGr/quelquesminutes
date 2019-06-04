@@ -35,7 +35,57 @@ const UserSchema = new mongoose.Schema(
         trim: true
       }
     },
-    isAssociation: Boolean
+    isAssociation: Boolean,
+    infoAssociation: {
+      form: {
+        type: String,
+        trim: true
+      },
+      declaration: {
+        date: {
+          type: String,
+          trim: true
+        },
+        lieu: {
+          type: String,
+          trim: true
+        }
+      },
+      data: {
+        email: {
+          type: String,
+          trim: true,
+          lowercase: true
+        },
+        tel: {
+          type: Number,
+          trim: true
+        }
+      },
+      site: {
+        type: String,
+        trim: true,
+        lowercase: true
+      },
+      description: String,
+      social: {
+        facebook: {
+          type: String,
+          trim: true,
+          lowercase: true
+        },
+        twitter: {
+          type: String,
+          trim: true,
+          lowercase: true
+        },
+        instagram: {
+          type: String,
+          trim: true,
+          lowercase: true
+        }
+      }
+    }
   },
   { timestamps: true }
 );

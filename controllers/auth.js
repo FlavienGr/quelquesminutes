@@ -91,20 +91,23 @@ exports.postLogin = async (req, res) => {
 };
 exports.getProfil = async (req, res) => {
   const id = req.session.user;
-
-  const user = await User.findById(id);
-
-  if (!user) throw new Error('Unable to identify you');
-
-  res.render('profilassoc', {
-    pageTitle: 'profil',
-    errors: '',
-    inputBackUp: {},
-    profileData: {
-      username: user.username,
-      email: user.email
+  try {
+    const user = await User.findById(id);
+    if (!user) {
+      req.flash('error', 'unable to login you');
+      return res.redirect('/login');
     }
-  });
+    return res.render('profile/profile', {
+      pageTitle: 'profil',
+      errors: '',
+      profileData: {
+        username: user.username,
+        email: user.email
+      }
+    });
+  } catch (error) {
+    return res.sendStatus(400);
+  }
 };
 
 exports.getLogout = async (req, res) => {

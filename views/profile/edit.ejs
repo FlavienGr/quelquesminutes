@@ -2,9 +2,14 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
 <div class="container">
+    <% if(errorMessage) { %>
+      <div class="alert alert-danger" role="alert">
+         <%= errorMessage %>
+        </div>
+    <% } %>
   <div class="row">
     <div class="col-8 mx-auto">
-        <form>
+        <form action="/users/edit" method="post">
             <div class="card">
                 <div class="card-header">
                   Identity
@@ -26,6 +31,7 @@
                       <input
                       type="email"
                       class="form-control"
+                      name="email"
                       id="inputEmail4"
                       value="<% if(profileData) { %><%= profileData.email %><% } %>"
                       placeholder="Email">
@@ -36,7 +42,8 @@
                       type="text"
                       class="form-control"
                       id="inputAddress"
-                      value="<% if(profileData) { %><%= profileData.address %><% } %>"
+                      name="street"
+                      value="<% if(profileData) { %><%= profileData.street %><% } %>"
                       placeholder="1234 Main St"
                       >
                     </div>
@@ -46,6 +53,7 @@
                         <input
                         type="text"
                         class="form-control"
+                        name="city"
                         id="inputCity"
                         value="<% if(profileData) { %><%= profileData.city %><% }%>"
                         >
@@ -54,6 +62,7 @@
                       <label for="inputZip">Zip</label>
                       <input
                       type="text"
+                      name="zip"
                       class="form-control"
                       id="inputZip"
                       value="<% if(profileData) { %><%= profileData.zip %><% } %>"

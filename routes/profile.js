@@ -8,4 +8,6 @@ router.get('/users/profile', auth, profileController.getProfil);
 
 router.get('/users/edit', auth, profileController.getEditPage);
 
+router.post('/users/edit', auth, profileController.postEditPage);
+
 module.exports = router;

@@ -30,12 +30,15 @@ const UserSchema = new mongoose.Schema(
         trim: true,
         lowercase: true
       },
-      cp: {
+      zip: {
         type: String,
         trim: true
       }
     },
-    isAssociation: Boolean,
+    isAssociation: {
+      type: Boolean,
+      default: false
+    },
     infoAssociation: {
       form: {
         type: String,

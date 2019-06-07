@@ -20,7 +20,7 @@ exports.getEditPage = async (req, res) => {
   const error = validationResult(req);
   let message;
   if (!error.isEmpty()) {
-    message = error[0].msg;
+    message = error.array()[0].msg;
   } else {
     message = null;
   }
@@ -41,9 +41,24 @@ exports.getEditPage = async (req, res) => {
 
 exports.postEditPage = async (req, res) => {
   const { username, email, address } = req.user;
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    return res.render('profile/edit', {
+      pageTitle: 'Edit',
+      error: errorCheck.array()[0].msg,
+      errorMessage: '',
+      profileData: {
+        username,
+        email,
+        street: address.street,
+        city: address.city,
+        zip: address.zip
+      }
+    });
+  }
+
   const updates = Object.keys(req.body);
   const allowedUpdates = ['username', 'email', 'street', 'city', 'zip'];
-
   const validateInput = updates.every(update => allowedUpdates.includes(update));
   if (!validateInput) {
     return res.render('profile/edit', {
@@ -84,9 +99,9 @@ exports.postEditPage = async (req, res) => {
         zip: user.address.zip
       }
     });
-  } catch (error) {
+  } catch (err) {
     // eslint-disable-next-line no-console
-    console.log(error);
+    console.log(err);
     return res.sendStatus(400);
   }
 };

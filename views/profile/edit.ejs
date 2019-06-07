@@ -2,9 +2,9 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
 <div class="container">
-    <% if(errorMessage) { %>
+    <% if(errorMessage || error) { %>
       <div class="alert alert-danger" role="alert">
-         <%= errorMessage %>
+         <%= errorMessage || error %>
         </div>
     <% } %>
   <div class="row">

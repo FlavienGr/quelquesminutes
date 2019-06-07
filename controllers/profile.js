@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator/check');
+const User = require('../models/User');
 
 exports.getProfil = async (req, res) => {
   const { username, email } = req.user;
@@ -17,18 +18,19 @@ exports.getProfil = async (req, res) => {
 };
 
 exports.getEditPage = async (req, res) => {
-  const error = validationResult(req);
-  let message;
-  if (!error.isEmpty()) {
-    message = error.array()[0].msg;
+  let errorFlashMessage = req.flash('error');
+  if (errorFlashMessage.length > 0) {
+    // eslint-disable-next-line prefer-destructuring
+    errorFlashMessage = errorFlashMessage[0];
   } else {
-    message = null;
+    errorFlashMessage = null;
   }
+
   const { username, email, address } = req.user;
   return res.render('profile/edit', {
     pageTitle: 'Edit',
-    error: message,
-    errorMessage: '',
+    error: '',
+    errorMessage: errorFlashMessage,
     profileData: {
       username,
       email,
@@ -39,9 +41,10 @@ exports.getEditPage = async (req, res) => {
   });
 };
 
-exports.postEditPage = async (req, res) => {
+exports.postEditPage = async (req, res, next) => {
   const { username, email, address } = req.user;
   const errorCheck = validationResult(req);
+
   if (!errorCheck.isEmpty()) {
     return res.render('profile/edit', {
       pageTitle: 'Edit',
@@ -56,7 +59,11 @@ exports.postEditPage = async (req, res) => {
       }
     });
   }
-
+  const isValidUsername = await User.findOne({ username });
+  if (isValidUsername) {
+    req.flash('error', 'Udpate username invalid');
+    return res.redirect('/users/edit');
+  }
   const updates = Object.keys(req.body);
   const allowedUpdates = ['username', 'email', 'street', 'city', 'zip'];
   const validateInput = updates.every(update => allowedUpdates.includes(update));
@@ -101,7 +108,7 @@ exports.postEditPage = async (req, res) => {
     });
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log(err);
-    return res.sendStatus(400);
+    console.log(err, 'there');
+    return next(err);
   }
 };

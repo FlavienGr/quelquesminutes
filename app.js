@@ -64,6 +64,7 @@ app.use(globalRouter);
 app.use(assocRouter);
 app.use(profileRouter);
 
+app.use((err, req, res, next) => res.status(400).send({ err: 'Update invalid' }));
 // //////
 
 const PORT = process.env.PORT || 3090;

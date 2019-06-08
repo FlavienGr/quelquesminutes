@@ -62,11 +62,13 @@ exports.postEditPage = async (req, res, next) => {
   try {
     const isValidUsername = await User.findOne({ username });
     if (isValidUsername) {
-      req.flash('error', 'Udpate username invalid');
-      return res.redirect('/users/edit');
+      throw new Error();
+      // req.flash('error', 'Udpate username invalid');
+      // return res.redirect('/users/edit');
     }
   } catch (err) {
-    throw new Error(err);
+    // throw new Error(err);
+    next(err);
   }
   const updates = Object.keys(req.body);
   const allowedUpdates = ['username', 'email', 'street', 'city', 'zip'];
@@ -112,7 +114,7 @@ exports.postEditPage = async (req, res, next) => {
     });
   } catch (err) {
     // eslint-disable-next-line no-console
-    console.log(err, 'there');
+    console.log(err);
     return next(err);
   }
 };

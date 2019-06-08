@@ -46,7 +46,7 @@ exports.postEditPage = async (req, res, next) => {
   const errorCheck = validationResult(req);
 
   if (!errorCheck.isEmpty()) {
-    return res.render('profile/edit', {
+    return res.status(422).render('profile/edit', {
       pageTitle: 'Edit',
       error: errorCheck.array()[0].msg,
       errorMessage: '',
@@ -62,19 +62,17 @@ exports.postEditPage = async (req, res, next) => {
   try {
     const isValidUsername = await User.findOne({ username });
     if (isValidUsername) {
-      throw new Error();
-      // req.flash('error', 'Udpate username invalid');
-      // return res.redirect('/users/edit');
+      req.flash('error', 'Udpate username invalid');
+      return res.redirect('/users/edit');
     }
   } catch (err) {
-    // throw new Error(err);
-    next(err);
+    throw new Error(err);
   }
   const updates = Object.keys(req.body);
   const allowedUpdates = ['username', 'email', 'street', 'city', 'zip'];
   const validateInput = updates.every(update => allowedUpdates.includes(update));
   if (!validateInput) {
-    return res.render('profile/edit', {
+    return res.status(400).render('profile/edit', {
       pageTitle: 'Edit',
       error: '',
       errorMessage: 'Invalid updates',

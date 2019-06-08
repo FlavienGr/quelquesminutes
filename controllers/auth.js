@@ -10,7 +10,7 @@ exports.getSignup = (req, res) => {
   });
 };
 
-exports.postSignup = async (req, res) => {
+exports.postSignup = async (req, res, next) => {
   const {
     username, email, password, isAssociation
   } = req.body;
@@ -28,29 +28,19 @@ exports.postSignup = async (req, res) => {
       }
     });
   }
-  let user;
-  if (isAssociation) {
-    user = new User({
-      username,
-      email,
-      password,
-      isAssociation: true
-    });
-  } else {
-    user = new User({
-      username,
-      email,
-      password,
-      isAssociation: false
-    });
-  }
+  const user = new User({
+    username,
+    email,
+    password,
+    isAssociation: !!isAssociation
+  });
   try {
     await user.save();
     req.session.user = user._id;
     req.session.isLoggedIn = true;
     return res.redirect('/');
   } catch (error) {
-    return res.sendStatus(400);
+    return next(error);
   }
 };
 exports.getLogin = (req, res) => {
@@ -69,11 +59,11 @@ exports.getLogin = (req, res) => {
   });
 };
 // eslint-disable-next-line consistent-return
-exports.postLogin = async (req, res) => {
+exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.render('auth/login', {
+    return res.status(422).render('auth/login', {
       pageTitle: 'Login',
       errors: errors.array()[0].msg,
       inputBackUp: {
@@ -101,7 +91,7 @@ exports.postLogin = async (req, res) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
-    res.sendStatus(400);
+    return next(error);
   }
 };
 

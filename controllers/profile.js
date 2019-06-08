@@ -42,7 +42,7 @@ exports.getEditPage = async (req, res) => {
 };
 
 exports.postEditPage = async (req, res, next) => {
-  const { username, email, address } = req.user;
+  const { username, email, address } = req.body;
   const errorCheck = validationResult(req);
 
   if (!errorCheck.isEmpty()) {
@@ -59,10 +59,14 @@ exports.postEditPage = async (req, res, next) => {
       }
     });
   }
-  const isValidUsername = await User.findOne({ username });
-  if (isValidUsername) {
-    req.flash('error', 'Udpate username invalid');
-    return res.redirect('/users/edit');
+  try {
+    const isValidUsername = await User.findOne({ username });
+    if (isValidUsername) {
+      req.flash('error', 'Udpate username invalid');
+      return res.redirect('/users/edit');
+    }
+  } catch (err) {
+    throw new Error(err);
   }
   const updates = Object.keys(req.body);
   const allowedUpdates = ['username', 'email', 'street', 'city', 'zip'];

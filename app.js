@@ -64,6 +64,7 @@ app.use(globalRouter);
 app.use(assocRouter);
 app.use(profileRouter);
 
+app.use((req, res, next) => res.render('400', { pageTitle: '400' }));
 app.use((err, req, res, next) => {
   res.status(500).render('500', {
     pageTitle: '500'

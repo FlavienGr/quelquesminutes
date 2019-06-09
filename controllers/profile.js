@@ -16,6 +16,7 @@ exports.getProfil = async (req, res) => {
     }
   });
 };
+// ///////////////////// Edit page;
 
 exports.getEditPage = async (req, res) => {
   let errorFlashMessage = req.flash('error');
@@ -115,4 +116,12 @@ exports.postEditPage = async (req, res, next) => {
     console.log(err);
     return next(err);
   }
+};
+
+// ///////////////////// Settings page;
+
+exports.getSettingsPage = (req, res) => {
+  res.render('settings/settings', {
+    pageTitle: 'Settings'
+  });
 };

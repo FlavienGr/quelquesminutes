@@ -2,9 +2,9 @@
 <body>
   <%- include('../includes/navigation.ejs') %>
 <div class="container">
-  <div class="row">
+  <div class="row my-3">
     <div class="col-8 mx-auto">
-        <form>
+        <form action="/users/profile/password" method="POST">
             <div class="card">
                 <div class="card-header">
                     Change Your Password
@@ -12,27 +12,87 @@
                 <div class="card-body">
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">Old Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword4"
+                    placeholder="Password"
+                    name="oldPassword"
+                    >
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">New Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword4"
+                    placeholder="Password"
+                    name="newPassword"
+                    >
                   </div>
                   <div class="form-group col-md-6">
                     <label for="inputPassword4">Confirm Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    <input
+                    type="password"
+                    class="form-control"
+                    id="inputPassword4"
+                    placeholder="Password"
+                    name="confirmPassword"
+                    >
                   </div>
 
                 </div>
+                <button type="submit" class="btn btn-primary col-3 my-3 mx-3">Save Password</button>
               </div>
+          </form>
+    </div>
+  </div>
+  <div class="row my-3">
+    <div class="col-8 mx-auto">
+        <form action="/users/profile/email" method="POST">
+            <div class="card">
+                <div class="card-header">
+                    Change Your Email
+                </div>
+                <div class="card-body">
+                  <div class="form-group col-md-6">
+                    <label for="inputemail1">New Email</label>
+                    <input
+                    type="email"
+                    class="form-control"
+                    id="inputemail1"
+                    placeholder="Email"
+                    name="newEmail"
+                    >
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label for="inputemail2">Confirm Email</label>
+                    <input
+                    type="email"
+                    class="form-control"
+                    id="inputemail1"
+                    placeholder="Email"
+                    name="confirmEmail"
+                    >
+                  </div>
 
+                </div>
+                <button type="submit" class="btn btn-primary col-3 my-3 mx-3">Save Email</button>
+              </div>
+          </form>
+    </div>
+  </div>
+  <div class="row my-3">
+    <div class="col-8 mx-auto">
+        <form action="/users/profile/delete" method="POST">
+            <div class="card">
+                <div class="card-header">
+                    Delete account
+                </div>
 
-          <div class="row">
-            <div class="col-2 mx-auto">
-          <button type="submit" class="btn btn-primary">Save</button>
+                  <button type="submit" class="btn btn-primary col-3 my-3 mx-3">Delete account</button>
 
-            </div>
-          </div>
+              </div>
           </form>
     </div>
   </div>

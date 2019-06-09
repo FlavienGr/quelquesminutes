@@ -20,5 +20,5 @@ router.post(
   auth,
   profileController.postEditPage
 );
-
+router.get('/users/profile/settings', auth, profileController.getSettingsPage);
 module.exports = router;

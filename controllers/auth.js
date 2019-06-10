@@ -74,17 +74,11 @@ exports.postLogin = async (req, res, next) => {
   }
 
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findByCredentials(email, password);
     if (!user) {
       req.flash('error', 'Invalid email or password');
-      res.redirect('/login');
+      return res.redirect('/login');
     }
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      req.flash('error', 'Invalid email or password');
-      res.redirect('/login');
-    }
-
     req.session.user = user._id;
     req.session.isLoggedIn = true;
     res.redirect('/');

@@ -104,6 +104,18 @@ UserSchema.methods.comparePassword = async (oldPassword, currentPassword) => {
   }
   return true;
 };
+UserSchema.statics.findByCredentials = async (email, password) => {
+  // eslint-disable-next-line no-use-before-define
+  const user = await User.findOne({ email });
+  if (!user) {
+    return false;
+  }
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return false;
+  }
+  return user;
+};
 // eslint-disable-next-line func-names
 UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {

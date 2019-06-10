@@ -1,5 +1,4 @@
 const { validationResult } = require('express-validator/check');
-const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 exports.getProfil = async (req, res) => {
@@ -130,7 +129,7 @@ exports.getSettingsPage = (req, res) => {
   } else {
     errorFlashMessage = null;
   }
-  res.render('settings/settings', {
+  return res.render('settings/settings', {
     pageTitle: 'Settings',
     errors: errorFlashMessage,
     errorMessage: ''
@@ -151,7 +150,10 @@ exports.postSettingsPassword = async (req, res, next) => {
 
   try {
     if (!user.comparePassword(oldPassword, user.password)) {
-      req.flash('error', 'It seems to have a problemen with the old password');
+      req.flash(
+        'error',
+        'It seems to have a problem with password, please try again'
+      );
       return res.redirect('/users/profile/settings');
     }
     user.password = newPassword;

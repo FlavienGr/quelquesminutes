@@ -149,7 +149,8 @@ exports.postSettingsPassword = async (req, res, next) => {
   }
 
   try {
-    if (!user.comparePassword(oldPassword, user.password)) {
+    const isAuthorize = await user.comparePassword(oldPassword, user.password);
+    if (!isAuthorize) {
       req.flash(
         'error',
         'It seems to have a problem with password, please try again'
@@ -162,6 +163,31 @@ exports.postSettingsPassword = async (req, res, next) => {
   } catch (error) {
     // eslint-disable-next-line no-console
     console.log(error);
+    return next(error);
+  }
+};
+
+exports.postSettingsEmail = async (req, res, next) => {
+  const { newEmail } = req.body;
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    return res.render('settings/settings', {
+      pageTitle: 'Settings',
+      errors: '',
+      errorMessage: errorCheck.array()[0].msg
+    });
+  }
+  const isEmailInUSe = await User.findOne({ email: newEmail });
+  if (isEmailInUSe) {
+    req.flash('error', 'Email already in use, please try another email');
+    return res.redirect('/users/profile/settings');
+  }
+  const { user } = req;
+  user.email = newEmail;
+  try {
+    await user.save();
+    return res.redirect('/users/profile');
+  } catch (error) {
     return next(error);
   }
 };

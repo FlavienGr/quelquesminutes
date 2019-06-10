@@ -26,26 +26,48 @@ router.post(
   auth,
   [
     body('oldPassword')
-      .isLength({ min: 8 })
-      .withMessage('Password must be at least 8 chars long, Please try again'),
+      .not()
+      .isEmpty()
+      .withMessage('Old Password should not be empty'),
     body('newPassword')
       .isLength({ min: 8 })
       .withMessage(
-        'New Password must be at least 5 chars long, Please try again'
+        'New Password must be at least 8 chars long, Please try again'
       ),
-    check('confirmPassword')
+    body('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.newPassword) {
+        throw new Error('Password confirmation does not match password');
+      }
+
+      // Success of this synchronous custom validator
+      return true;
+    })
+  ],
+  profileController.postSettingsPassword
+);
+router.post(
+  '/users/profile/email',
+  auth,
+  [
+    body('newEmail')
       .not()
       .isEmpty()
-      .withMessage('Password confirmation is required')
+      .withMessage('New Email should not be empty')
+      .isEmail()
+      .withMessage('Incorrect email format!')
+      .normalizeEmail()
+      .trim(),
+    body('confirmEmail')
+      .normalizeEmail()
+      .trim()
       .custom((value, { req }) => {
-        if (value !== req.body.newPassword) {
+        if (value !== req.body.newEmail) {
           throw new Error('Password confirmation does not match password');
         }
-
         // Success of this synchronous custom validator
         return true;
       })
   ],
-  profileController.postSettingsPassword
+  profileController.postSettingsEmail
 );
 module.exports = router;

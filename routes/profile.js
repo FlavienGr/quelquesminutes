@@ -70,4 +70,17 @@ router.post(
   ],
   profileController.postSettingsEmail
 );
+
+router.get('/users/delete', auth, profileController.getDeleteAccountPage);
+router.post(
+  '/users/delete/confirm',
+  auth,
+  [
+    check('password')
+      .not()
+      .isEmpty()
+      .withMessage('Your password must be added')
+  ],
+  profileController.postDeleteAccountPage
+);
 module.exports = router;

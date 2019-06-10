@@ -58,8 +58,7 @@ exports.getLogin = (req, res) => {
   let errorFlashMessage = req.flash('error');
 
   if (errorFlashMessage.length > 0) {
-    // eslint-disable-next-line prefer-destructuring
-    errorFlashMessage = errorFlashMessage[0];
+    [errorFlashMessage] = errorFlashMessage;
   } else {
     errorFlashMessage = null;
   }

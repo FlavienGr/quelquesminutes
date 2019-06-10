@@ -191,3 +191,39 @@ exports.postSettingsEmail = async (req, res, next) => {
     return next(error);
   }
 };
+exports.getDeleteAccountPage = async (req, res, next) => {
+  let errorFlash = req.flash('error');
+  if (errorFlash.length > 0) {
+    [errorFlash] = errorFlash;
+  } else {
+    errorFlash = null;
+  }
+  return res.render('profile/deletePage', {
+    pageTitle: 'Delete account',
+    errors: errorFlash
+  });
+};
+exports.postDeleteAccountPage = async (req, res, next) => {
+  const { password } = req.body;
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    return res.render('profile/deletePage', {
+      pageTitle: 'Delete account',
+      errors: '',
+      errorMessage: errorCheck.array()[0].msg
+    });
+  }
+  const { user } = req;
+  try {
+    const isAuthorize = await user.comparePassword(password, user.password);
+    if (!isAuthorize) {
+      req.flash('error', 'Password incorrect, please try again');
+      return res.redirect('/users/delete');
+    }
+    await user.remove();
+    await req.session.destroy();
+    return res.redirect('/login');
+  } catch (error) {
+    return next(error);
+  }
+};

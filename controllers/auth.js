@@ -1,11 +1,17 @@
-const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator/check');
 const User = require('../models/User');
 
 exports.getSignup = (req, res) => {
+  let errorFlash = req.flash('error');
+  if (errorFlash.length > 0) {
+    // eslint-disable-next-line prefer-destructuring
+    errorFlash = errorFlash[0];
+  } else {
+    errorFlash = null;
+  }
   res.render('auth/signup', {
     pageTitle: 'Signup',
-    errors: '',
+    errors: errorFlash,
     inputBackUp: {}
   });
 };
@@ -27,6 +33,11 @@ exports.postSignup = async (req, res, next) => {
         checked: !!isAssociation
       }
     });
+  }
+  const isEmailExist = await User.findOne({ email });
+  if (isEmailExist) {
+    req.flash('error', 'Email already in use, please try another email');
+    return res.redirect('/signup');
   }
   const user = new User({
     username,

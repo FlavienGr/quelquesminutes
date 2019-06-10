@@ -92,7 +92,18 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
+UserSchema.methods.comparePassword = async (oldPassword, currentPassword) => {
+  try {
+    const isMatch = await bcrypt.compare(oldPassword, currentPassword);
+    if (!isMatch) {
+      return false;
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+  }
+  return true;
+};
 // eslint-disable-next-line func-names
 UserSchema.pre('save', async function (next) {
   if (this.isModified('password')) {

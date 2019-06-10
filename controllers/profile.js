@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator/check');
+const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 
 exports.getProfil = async (req, res) => {
@@ -121,7 +122,44 @@ exports.postEditPage = async (req, res, next) => {
 // ///////////////////// Settings page;
 
 exports.getSettingsPage = (req, res) => {
+  let errorFlashMessage = req.flash('error');
+
+  if (errorFlashMessage.length > 0) {
+    // eslint-disable-next-line prefer-destructuring
+    errorFlashMessage = errorFlashMessage[0];
+  } else {
+    errorFlashMessage = null;
+  }
   res.render('settings/settings', {
-    pageTitle: 'Settings'
+    pageTitle: 'Settings',
+    errors: errorFlashMessage,
+    errorMessage: ''
   });
+};
+
+exports.postSettingsPassword = async (req, res, next) => {
+  const { oldPassword, newPassword } = req.body;
+  const { user } = req;
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    return res.render('settings/settings', {
+      pageTitle: 'Settings',
+      errors: '',
+      errorMessage: errorCheck.array()[0].msg
+    });
+  }
+
+  try {
+    if (!user.comparePassword(oldPassword, user.password)) {
+      req.flash('error', 'It seems to have a problemen with the old password');
+      return res.redirect('/users/profile/settings');
+    }
+    user.password = newPassword;
+    await user.save();
+    return res.redirect('/');
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error);
+    return next(error);
+  }
 };

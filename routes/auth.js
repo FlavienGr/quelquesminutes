@@ -16,7 +16,7 @@ router.post(
       .isLength({ min: 5 })
       .withMessage('Username must be at least 5 chars long'),
     check('password')
-      .isLength({ min: 3 })
+      .isLength({ min: 8 })
       .withMessage('Password must be at least 5 chars long')
   ],
   authController.postSignup
@@ -35,5 +35,5 @@ router.post(
   authController.postLogin
 );
 
-router.get('/logout', authController.getLogout);
+router.get('/logout', auth, authController.getLogout);
 module.exports = router;

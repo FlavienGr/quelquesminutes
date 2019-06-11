@@ -53,5 +53,25 @@ router.post(
   ],
   authController.postResetPassword
 );
+router.get('/reset-password/:token', authController.getNewPassword);
+router.post(
+  '/reset-password/:token',
+  [
+    check('password')
+      .not()
+      .isEmpty()
+      .withMessage('Please, enter a new password')
+      .isLength({ min: 8 })
+      .withMessage('Password must be at least 5 chars long'),
+    check('confirmPassword').custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error('Password confirmation does not match');
+      }
+      return true;
+    })
+  ],
+  authController.postNewPassword
+);
+
 router.get('/logout', auth, authController.getLogout);
 module.exports = router;

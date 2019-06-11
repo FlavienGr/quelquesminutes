@@ -41,8 +41,23 @@ Cheers,
   };
   sgMail.send(msg);
 };
+const sendPasswordChanged = (email) => {
+  const msg = {
+    to: `${email}`,
+    from: 'zencles75@gmail.com',
+    subject: 'Success! Your password has been changed.',
+    html: `
+    <h1>You've got yourself a new password!</h1>
+    <p>We just wanted to let you know that your password has been changed successfully. If you did not make this change, please <a href="http://localhost:3090/contact-us">let us know</a> as soon as possible. We will look into what's happened.</p>
+
+    Cheers,
+    `
+  };
+  sgMail.send(msg);
+};
 module.exports = {
   sendWelcomeEmail,
   sendQuitEmail,
-  sendResetPassword
+  sendResetPassword,
+  sendPasswordChanged
 };

@@ -1,7 +1,7 @@
 const { validationResult } = require('express-validator/check');
 const crypto = require('crypto');
 const User = require('../models/User');
-const { sendResetPassword } = require('../email/account');
+const { sendResetPassword, sendPasswordChanged } = require('../email/account');
 
 exports.getSignup = (req, res) => {
   let errorFlash = req.flash('error');
@@ -132,6 +132,58 @@ exports.postResetPassword = async (req, res, next) => {
     // // sendEmail
     sendResetPassword(email, user.username, token);
     return res.send('ok');
+  } catch (error) {
+    return next(error);
+  }
+};
+
+exports.getNewPassword = async (req, res, next) => {
+  const resetToken = req.params.token;
+  try {
+    const user = await User.findOne(
+      { resetToken },
+      {
+        $gt: Date.now()
+      }
+    );
+    console.log(user, 'user get new password');
+    if (!user) {
+      req.flash('error', 'Password reset link is invalid or has expired');
+      return res.redirect('/reset-password');
+    }
+    return res.render('auth/new-password', {
+      pageTitle: 'New Password',
+      errorMessage: '',
+      resetToken
+    });
+  } catch (error) {
+    return next(error);
+  }
+};
+exports.postNewPassword = async (req, res, next) => {
+  const { password } = req.body;
+  const resetToken = req.params.token;
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    res.render('auth/new-password', {
+      pageTitle: 'New Password',
+      errorMessage: errorCheck.array()[0].msg,
+      resetToken
+    });
+  }
+  try {
+    const user = await User.findOne({ resetToken }, 'email', {
+      $gt: Date.now()
+    });
+    if (!user) {
+      req.flash('error', 'Password reset link is invalid or has expired');
+      return res.redirect('/reset-password');
+    }
+    user.password = password;
+    await user.save();
+    // /// send Email password changed
+    sendPasswordChanged(user.email);
+    return res.redirect('/login');
   } catch (error) {
     return next(error);
   }

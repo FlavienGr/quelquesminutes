@@ -1,5 +1,7 @@
 const { validationResult } = require('express-validator/check');
+const crypto = require('crypto');
 const User = require('../models/User');
+const { sendResetPassword } = require('../email/account');
 
 exports.getSignup = (req, res) => {
   let errorFlash = req.flash('error');
@@ -99,6 +101,41 @@ exports.postLogin = async (req, res, next) => {
   }
 };
 
+exports.getResetPassword = (req, res) => {
+  const errorFlash = req.flash('error');
+  return res.render('auth/reset-password', {
+    pageTitle: 'Forgot Password',
+    errors: errorFlash.length > 0 ? errorFlash[0] : null,
+    errorMessage: ''
+  });
+};
+exports.postResetPassword = async (req, res, next) => {
+  const { email } = req.body;
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    return res.render('auth/reset-password', {
+      pageTitle: 'Forgot Password',
+      errors: '',
+      errorMessage: errorCheck.array()[0].msg
+    });
+  }
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.redirect('/');
+    }
+    const buffer = await crypto.randomBytes(32);
+    const token = buffer.toString('hex');
+    user.resetToken = token;
+    user.resetTokenExpire = Date.now() + 60 * 60 * 24 * 1000;
+    await user.save();
+    // // sendEmail
+    sendResetPassword(email, user.username, token);
+    return res.send('ok');
+  } catch (error) {
+    return next(error);
+  }
+};
 exports.getLogout = async (req, res) => {
   await req.session.destroy();
   res.redirect('/');

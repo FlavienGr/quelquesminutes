@@ -19,6 +19,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    resetToken: String,
+    resetTokenExpire: Date,
     address: {
       street: {
         type: String,

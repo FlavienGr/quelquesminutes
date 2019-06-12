@@ -31,8 +31,8 @@ const sendResetPassword = (email, name, token) => {
 <h2>Hi ${name},</h2>
 <p>Forgot your password? No worries.</p>
 
-<p>You can reset your password immediately by <a href="http://localhost:3090/reset-password/${token}">clicking here</a> or pasting the following link in your browser:</p>
-<p>http://localhost:3090/reset-password/${token}</p>
+<p>You can reset your password immediately by <a href="http://localhost:3090/change-password/${token}">clicking here</a> or pasting the following link in your browser:</p>
+<p>http://localhost:3090/change-password/${token}</p>
 
 <p>If you run into any other problems, drop us a line at help@quelquesminutes.com.</p>
 

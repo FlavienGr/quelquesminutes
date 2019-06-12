@@ -131,7 +131,7 @@ exports.postResetPassword = async (req, res, next) => {
     await user.save();
     // // sendEmail
     sendResetPassword(email, user.username, token);
-    return res.send('ok');
+    return res.redirect('/reset-password/instructions');
   } catch (error) {
     return next(error);
   }
@@ -146,7 +146,7 @@ exports.getNewPassword = async (req, res, next) => {
         $gt: Date.now()
       }
     );
-    console.log(user, 'user get new password');
+
     if (!user) {
       req.flash('error', 'Password reset link is invalid or has expired');
       return res.redirect('/reset-password');
@@ -188,6 +188,9 @@ exports.postNewPassword = async (req, res, next) => {
     return next(error);
   }
 };
+exports.getInstructions = (req, res) => res.render('auth/reset-instructions', {
+  pageTitle: 'Forgot Password'
+});
 exports.getLogout = async (req, res) => {
   await req.session.destroy();
   res.redirect('/');

@@ -13,9 +13,14 @@ router.post(
   '/users/edit',
   auth,
   [
+    body('username')
+      .isLength({ min: 5 })
+      .withMessage('Username must be at least 5 chars long'),
     body('email')
       .isEmail()
       .withMessage('Incorrect email format')
+      .normalizeEmail()
+      .trim()
   ],
   profileController.postEditPage
 );

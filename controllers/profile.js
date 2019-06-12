@@ -1,3 +1,5 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable consistent-return */
 const { validationResult } = require('express-validator/check');
 const User = require('../models/User');
 const { sendEmailChanged, sendToNewEmail } = require('../email/account');
@@ -44,31 +46,34 @@ exports.getEditPage = async (req, res) => {
 };
 
 exports.postEditPage = async (req, res, next) => {
-  const { username, email, address } = req.body;
-  console.log(username, 'username');
-  console.log(email, 'email');
-  console.log(address, 'address');
+  const {
+    username, email, street, city, zip
+  } = req.body;
+  console.log(req.body, 'body');
+
   const errorCheck = validationResult(req);
 
   if (!errorCheck.isEmpty()) {
-    return res.status(422).render('profile/edit', {
+    return res.status(400).render('profile/edit', {
       pageTitle: 'Edit',
       error: errorCheck.array()[0].msg,
       errorMessage: '',
       profileData: {
         username,
         email,
-        street: address.street,
-        city: address.city,
-        zip: address.zip
+        street,
+        city,
+        zip
       }
     });
   }
   try {
-    const isValidUsername = await User.findOne({ username });
-    if (isValidUsername) {
-      req.flash('error', 'Udpate username invalid');
-      return res.redirect('/users/edit');
+    if (username !== req.user.username) {
+      const isValidUsername = await User.findOne({ username });
+      if (isValidUsername) {
+        req.flash('error', 'Udpate username already in use');
+        return res.redirect('/users/edit');
+      }
     }
   } catch (err) {
     throw new Error(err);
@@ -84,23 +89,28 @@ exports.postEditPage = async (req, res, next) => {
       profileData: {
         username,
         email,
-        street: address.street,
-        city: address.city,
-        zip: address.zip
+        street,
+        city,
+        zip
       }
     });
   }
   const userEmailBeforeUpdate = { email: req.user.email };
+  const { user } = req;
   try {
     const keyWord = ['street', 'city', 'zip'];
-    const { user } = req;
     updates.forEach((update) => {
       if (keyWord.includes(update)) {
-        // eslint-disable-next-line no-return-assign
-        return (user.address[update] = req.body[update]);
+        if (user.address[update] !== req.body[update]) {
+          return (user.address[update] = req.body[update]);
+        }
+
+        return;
       }
-      // eslint-disable-next-line no-return-assign
-      return (user[update] = req.body[update]);
+
+      if (user[update] !== req.body[update]) {
+        return (user[update] = req.body[update]);
+      }
     });
     await user.save();
 
@@ -133,8 +143,7 @@ exports.getSettingsPage = (req, res) => {
   let errorFlashMessage = req.flash('error');
 
   if (errorFlashMessage.length > 0) {
-    // eslint-disable-next-line prefer-destructuring
-    errorFlashMessage = errorFlashMessage[0];
+    [errorFlashMessage] = errorFlashMessage;
   } else {
     errorFlashMessage = null;
   }

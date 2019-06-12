@@ -180,6 +180,8 @@ exports.postNewPassword = async (req, res, next) => {
       return res.redirect('/reset-password');
     }
     user.password = password;
+    user.resetToken = undefined;
+    user.resetTokenExpire = undefined;
     await user.save();
     // /// send Email password changed
     sendPasswordChanged(user.email);

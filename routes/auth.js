@@ -19,7 +19,7 @@ router.post(
       .withMessage('Username must be at least 5 chars long'),
     check('password')
       .isLength({ min: 8 })
-      .withMessage('Password must be at least 5 chars long')
+      .withMessage('Password must be at least 8 chars long')
   ],
   authController.postSignup
 );
@@ -33,8 +33,8 @@ router.post(
       .normalizeEmail()
       .trim(),
     check('password')
-      .isLength({ min: 3 })
-      .withMessage('Password must be at least 5 chars long')
+      .isLength({ min: 8 })
+      .withMessage('Password must be at least 8 chars long')
   ],
   authController.postLogin
 );
@@ -62,7 +62,7 @@ router.post(
       .isEmpty()
       .withMessage('Please, enter a new password')
       .isLength({ min: 8 })
-      .withMessage('Password must be at least 5 chars long'),
+      .withMessage('Password must be at least 8 chars long'),
     check('confirmPassword').custom((value, { req }) => {
       if (value !== req.body.password) {
         throw new Error('Password confirmation does not match');

@@ -1,5 +1,6 @@
 const { validationResult } = require('express-validator/check');
 const User = require('../models/User');
+const { sendEmailChanged, sendToNewEmail } = require('../email/account');
 
 exports.getProfil = async (req, res) => {
   const { username, email } = req.user;
@@ -44,6 +45,9 @@ exports.getEditPage = async (req, res) => {
 
 exports.postEditPage = async (req, res, next) => {
   const { username, email, address } = req.body;
+  console.log(username, 'username');
+  console.log(email, 'email');
+  console.log(address, 'address');
   const errorCheck = validationResult(req);
 
   if (!errorCheck.isEmpty()) {
@@ -86,6 +90,7 @@ exports.postEditPage = async (req, res, next) => {
       }
     });
   }
+  const userEmailBeforeUpdate = { email: req.user.email };
   try {
     const keyWord = ['street', 'city', 'zip'];
     const { user } = req;
@@ -99,6 +104,10 @@ exports.postEditPage = async (req, res, next) => {
     });
     await user.save();
 
+    if (user.email !== userEmailBeforeUpdate.email) {
+      sendEmailChanged(userEmailBeforeUpdate.email, user.email);
+      sendToNewEmail(user.email);
+    }
     return res.render('profile/edit', {
       pageTitle: 'Edit',
       error: '',

@@ -55,9 +55,42 @@ const sendPasswordChanged = (email) => {
   };
   sgMail.send(msg);
 };
+const sendEmailChanged = (email, newEmail) => {
+  const msg = {
+    to: `${email}`,
+    from: 'zencles75@gmail.com',
+    subject: 'Account QuelquesMinutes.org: Email address changed.',
+    html: `
+    <h1>Did you change your email address?</h1>
+    <p>We noticed the email address for your QuelquesMinutes account was recently changed. If this was you, you can safely disregard this email.</p>
+    <h2>Email address changed to: ${newEmail}</h2>
+
+    <p>If you did not make this change, please <a href="http://localhost:3090/contact-us">let us know</a> as soon as possible. We will look into what's happened.</p>
+
+    Thanks,
+    `
+  };
+  sgMail.send(msg);
+};
+const sendToNewEmail = (email) => {
+  const msg = {
+    to: `${email}`,
+    from: 'zencles75@gmail.com',
+    subject: 'Success! Your Email has been changed.',
+    html: `
+    <p>To complete the process of changing your email address, you must confirm your new address below:</p>
+
+
+    Thanks,
+    `
+  };
+  sgMail.send(msg);
+};
 module.exports = {
   sendWelcomeEmail,
   sendQuitEmail,
   sendResetPassword,
-  sendPasswordChanged
+  sendPasswordChanged,
+  sendEmailChanged,
+  sendToNewEmail
 };

@@ -2,6 +2,7 @@ const dotenv = require('dotenv');
 const express = require('express');
 const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
+const csrf = require('csurf');
 const path = require('path');
 const logger = require('morgan');
 const flash = require('connect-flash');
@@ -54,8 +55,12 @@ app.use(
     }
   })
 );
+const csrfProtection = csrf();
+
 app.use(flash());
+app.use(csrfProtection);
 app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
   res.locals.isAuthenticated = req.session.isLoggedIn;
   // res.locals.csrfToken = req.csrfToken();
   next();
@@ -65,6 +70,13 @@ app.use(assocRouter);
 app.use(profileRouter);
 
 app.use((req, res, next) => res.render('400', { pageTitle: '400' }));
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+
+  // handle CSRF token errors here
+  res.status(403);
+  return res.send('form tampered with');
+});
 app.use((err, req, res, next) => {
   res.status(500).render('500', {
     pageTitle: '500'

@@ -57,6 +57,7 @@ exports.postSignup = async (req, res, next) => {
   }
 };
 exports.getLogin = (req, res) => {
+  console.log(req);
   let errorFlashMessage = req.flash('error');
 
   if (errorFlashMessage.length > 0) {

@@ -10,6 +10,7 @@
       <div class="row">
         <div class="col-4 mx-auto">
           <form action="/users/delete/confirm" method="POST">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <div class="form-group">
                   <label for="password">Password</label>
                   <input

@@ -4,6 +4,7 @@ const auth = require('../middleware/auth');
 
 const router = express.Router();
 
-router.post('/job', auth, jobController.postJob);
+router.get('/job/create', auth, jobController.getCreateJob);
+router.post('/job/create', auth, jobController.postCreateJob);
 
 module.exports = router;

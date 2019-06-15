@@ -29,6 +29,7 @@ app.set('views', path.join(__dirname, 'views'));
 const assocRouter = require('./routes/auth');
 const globalRouter = require('./routes/global');
 const profileRouter = require('./routes/profile');
+const jobRouter = require('./routes/job');
 // /// DB connection
 
 app.use(logger('dev'));
@@ -68,6 +69,7 @@ app.use((req, res, next) => {
 app.use(globalRouter);
 app.use(assocRouter);
 app.use(profileRouter);
+app.use(jobRouter);
 
 app.use((req, res, next) => res.render('400', { pageTitle: '400' }));
 app.use((err, req, res, next) => {
@@ -78,6 +80,7 @@ app.use((err, req, res, next) => {
   return res.send('form tampered with');
 });
 app.use((err, req, res, next) => {
+  console.log(err);
   res.status(500).render('500', {
     pageTitle: '500'
   });

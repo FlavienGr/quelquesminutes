@@ -5,7 +5,7 @@
     <% if(errorMessage || error) { %>
       <div class="alert alert-danger" role="alert">
          <%= errorMessage || error %>
-        </div>
+      </div>
     <% } %>
   <div class="row">
     <div class="col-8 mx-auto">
@@ -59,7 +59,7 @@
                         value="<% if(profileData) { %><%= profileData.city %><% }%>"
                         >
                       </div>
-                    <div class="form-group col-md-2">
+                      <div class="form-group col-md-2">
                       <label for="inputZip">Zip</label>
                       <input
                       type="text"
@@ -76,10 +76,10 @@
 
           </div>
           <button type="submit" class="btn btn-primary">Save</button>
-          </form>
+        </form>
     </div>
   </div>
-</div>
+
 
   <%- include('../includes/scripts.ejs') %>
 </body>

@@ -94,6 +94,11 @@ const UserSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+UserSchema.virtual('Job', {
+  ref: 'Job',
+  localField: '_id',
+  foreignField: 'owner'
+});
 UserSchema.methods.comparePassword = async (oldPassword, currentPassword) => {
   try {
     const isMatch = await bcrypt.compare(oldPassword, currentPassword);

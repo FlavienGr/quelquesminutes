@@ -53,11 +53,15 @@ exports.postCreateJob = async (req, res, next) => {
     'datepickerStart',
     'datepickerEnd'
   ];
-  const updates = Object.keys(req.body);
+  const updates = Object.keys(req.body).filter(item => item !== '_csrf');
   const isValidOperation = updates.every(update => allowedUpdates.includes(update));
   const isEmpty = updates.every(update => !!req.body[update].trim());
 
-  if (!isValidOperation && !isEmpty) {
+  if (!isValidOperation) {
+    req.flash('error', 'Operation not allowed');
+    return res.redirect('/job/create');
+  }
+  if (!isEmpty) {
     return res.render('job/createJob', {
       pageTitle: 'Create Job',
       error: 'Every field should be completed',

@@ -72,8 +72,8 @@ exports.postCreateJob = async (req, res, next) => {
         street,
         city,
         zip,
-        start: '',
-        end: ''
+        start: datepickerStart,
+        end: datepickerEnd
       }
     });
   }

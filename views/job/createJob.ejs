@@ -81,6 +81,7 @@
                           class="form-control"
                           name="datepickerStart"
                           id="datepicker-start"
+                          value="<% if (profileData) { %><%= profileData.start %><% } %>"
                           >
                           <div class="input-group-addon">
                             <span class="glyphicon glyphicon-th"></span>
@@ -96,6 +97,7 @@
                             class="form-control"
                             id="datepicker-end"
                             name="datepickerEnd"
+                            value="<% if (profileData) { %><%= profileData.end %><% } %>"
                             >
                             <div class="input-group-addon">
                                 <span class="glyphicon glyphicon-th"></span>

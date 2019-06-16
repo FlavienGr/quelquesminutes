@@ -86,3 +86,21 @@ exports.postCreateJob = async (req, res, next) => {
     return next(error);
   }
 };
+
+exports.getJobList = async (req, res, next) => {
+  try {
+    const list = await Job.find(
+      { owner: req.user._id },
+      'title description city street zip start end'
+    );
+    return res.render('job/userJobList', {
+      pageTitle: 'List Job',
+      error: '',
+      errorMessage: '',
+      list,
+      moment
+    });
+  } catch (error) {
+    return next(error);
+  }
+};

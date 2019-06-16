@@ -47,4 +47,5 @@ router.post(
   jobController.postCreateJob
 );
 
+router.get('/job/list', auth, jobController.getJobList);
 module.exports = router;

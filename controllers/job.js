@@ -1,4 +1,6 @@
 const { validationResult } = require('express-validator/check');
+const moment = require('moment');
+
 const Job = require('../models/Job');
 
 exports.getCreateJob = (req, res) => {
@@ -18,8 +20,15 @@ exports.getCreateJob = (req, res) => {
 };
 exports.postCreateJob = async (req, res, next) => {
   const {
-    title, description, street, city, zip
+    title,
+    description,
+    street,
+    city,
+    zip,
+    datepickerStart,
+    datepickerEnd
   } = req.body;
+
   const errorCheck = validationResult(req);
   if (!errorCheck.isEmpty()) {
     return res.render('job/createJob', {
@@ -35,7 +44,15 @@ exports.postCreateJob = async (req, res, next) => {
       }
     });
   }
-  const allowedUpdates = ['title', 'description', 'street', 'city', 'zip'];
+  const allowedUpdates = [
+    'title',
+    'description',
+    'street',
+    'city',
+    'zip',
+    'datepickerStart',
+    'datepickerEnd'
+  ];
   const updates = Object.keys(req.body);
   const isValidOperation = updates.every(update => allowedUpdates.includes(update));
   const isEmpty = updates.every(update => !!req.body[update].trim());
@@ -50,7 +67,9 @@ exports.postCreateJob = async (req, res, next) => {
         description,
         street,
         city,
-        zip
+        zip,
+        start: '',
+        end: ''
       }
     });
   }
@@ -62,6 +81,8 @@ exports.postCreateJob = async (req, res, next) => {
       city,
       zip
     },
+    start: moment(datepickerStart, 'DD-MM-YYYY').format(),
+    end: moment(datepickerEnd, 'DD-MM-YYYY').format(),
     owner: req.user._id
   });
   try {

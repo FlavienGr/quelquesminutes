@@ -40,7 +40,9 @@ exports.postCreateJob = async (req, res, next) => {
         description,
         street,
         city,
-        zip
+        zip,
+        start: datepickerStart,
+        end: datepickerEnd
       }
     });
   }
@@ -55,28 +57,12 @@ exports.postCreateJob = async (req, res, next) => {
   ];
   const updates = Object.keys(req.body).filter(item => item !== '_csrf');
   const isValidOperation = updates.every(update => allowedUpdates.includes(update));
-  const isEmpty = updates.every(update => !!req.body[update].trim());
 
   if (!isValidOperation) {
     req.flash('error', 'Operation not allowed');
     return res.redirect('/job/create');
   }
-  if (!isEmpty) {
-    return res.render('job/createJob', {
-      pageTitle: 'Create Job',
-      error: 'Every field should be completed',
-      errorMessage: '',
-      profileData: {
-        title,
-        description,
-        street,
-        city,
-        zip,
-        start: datepickerStart,
-        end: datepickerEnd
-      }
-    });
-  }
+
   const job = new Job({
     title,
     description,

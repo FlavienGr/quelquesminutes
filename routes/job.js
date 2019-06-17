@@ -47,7 +47,7 @@ router.post(
   jobController.postCreateJob
 );
 
-router.get('/job/list', auth, jobController.getJobList);
+router.get('/users/job/list', auth, jobController.getJobList);
 router.get('/users/job/:id', auth, jobController.getJobByIdOwner);
 
 router.get('/users/job/update/:id', auth, jobController.getJobUpdate);

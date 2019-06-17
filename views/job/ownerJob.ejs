@@ -1,0 +1,22 @@
+<%- include('../includes/head.ejs') %>
+
+<body>
+  <%- include('../includes/navigation.ejs') %>
+    <div class="container">
+      <% if(job) { %>
+        <div class="row">
+          <div class="col-8">
+              <h2><%= job.title %></h2>
+            <p><%= job.description %></p>
+            <p><%= job.city %></p>
+            <p><%= job.street %></p>
+            <p><%= job.zip %></p>
+            <p><%= moment(job.start).format('DD/MM/YYYY') %></p>
+            <p><%= moment(job.end).format('DD/MM/YYYY') %></p>
+            <a href="/users/job/update/<%= job._id %>" class="btn btn-primary">Update</a>
+            <a href="/users/job/delete/<%= job._id %>" class="btn btn-primary">Delete</a>
+          </div>
+        </div>
+        <% } %>
+  <%- include('../includes/scripts.ejs') %>
+</body>

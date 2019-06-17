@@ -122,3 +122,46 @@ exports.getJobByIdOwner = async (req, res, next) => {
     return next(error);
   }
 };
+exports.getJobUpdate = async (req, res, next) => {
+  try {
+    const job = await Job.findById(
+      req.params.id,
+      'title description location start end',
+      { owner: req.user._id }
+    );
+    const errorFlash = req.flash('error');
+    if (errorFlash.length > 0) {
+      return res.render('job/update-job', {
+        pageTitle: 'Update job',
+        job,
+        error: errorFlash[0],
+        errorMessage: '',
+        moment
+      });
+    }
+    const {
+      title, description, location, start, end
+    } = job;
+
+    return res.render('job/update-job', {
+      pageTitle: 'Update job',
+      jobData: {
+        id: job._id,
+        title,
+        description,
+        street: location.street,
+        city: location.city,
+        zip: location.zip,
+        start,
+        end
+      },
+      error: '',
+      errorMessage: '',
+      moment
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};

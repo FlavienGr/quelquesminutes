@@ -48,4 +48,5 @@ router.post(
 );
 
 router.get('/job/list', auth, jobController.getJobList);
+router.get('/users/job/:id', auth, jobController.getJobByIdOwner);
 module.exports = router;

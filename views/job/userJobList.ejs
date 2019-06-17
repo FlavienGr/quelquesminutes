@@ -17,7 +17,7 @@
                 <p class="card-text"><%= job.zip %></p>
                 <p class="card-text"><%= moment(job.start).format('DD/MM/YYYY') %></p>
                 <p class="card-text"><%= moment(job.end).format('DD/MM/YYYY') %></p>
-                <a href="/job/<%= job._id %>" class="btn btn-primary">Go somewhere</a>
+                <a href="/users/job/<%= job._id %>" class="btn btn-primary">See</a>
               </div>
             </div>
         <% }); %>

@@ -1,6 +1,5 @@
 const { validationResult } = require('express-validator/check');
 const moment = require('moment');
-
 const Job = require('../models/Job');
 
 exports.getCreateJob = (req, res) => {
@@ -101,6 +100,25 @@ exports.getJobList = async (req, res, next) => {
       moment
     });
   } catch (error) {
+    return next(error);
+  }
+};
+exports.getJobByIdOwner = async (req, res, next) => {
+  try {
+    const job = await Job.findById(
+      req.params.id,
+      'title description city street zip start end',
+      { owner: req.user._id }
+    );
+    return res.render('job/ownerJob', {
+      pageTitle: 'My job',
+      job,
+      error: '',
+      moment
+    });
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
     return next(error);
   }
 };

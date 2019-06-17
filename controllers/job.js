@@ -165,3 +165,63 @@ exports.getJobUpdate = async (req, res, next) => {
     return next(error);
   }
 };
+exports.postUpdateJob = async (req, res, next) => {
+  const {
+    title,
+    description,
+    street,
+    city,
+    zip,
+    datepickerStart,
+    datepickerEnd
+  } = req.body;
+
+  const errorCheck = validationResult(req);
+  if (!errorCheck.isEmpty()) {
+    return res.render('job/update-job', {
+      pageTitle: 'Update job',
+      jobData: {
+        id: req.params.id,
+        title,
+        description,
+        street,
+        city,
+        zip,
+        start: datepickerStart,
+        end: datepickerEnd
+      },
+      error: '',
+      errorMessage: errorCheck.array()[0].msg,
+      moment
+    });
+  }
+  const allowedUpdates = [
+    'title',
+    'description',
+    'street',
+    'city',
+    'zip',
+    'datepickerStart',
+    'datepickerEnd'
+  ];
+  const updates = Object.keys(req.body).filter(item => item !== '_csrf');
+  const isValidOperation = updates.every(update => allowedUpdates.includes(update));
+
+  if (!isValidOperation) {
+    req.flash('error', 'Operation not allowed');
+    return res.redirect('/job/create');
+  }
+  try {
+    const job = await Job.findById(
+      req.params.id,
+      'title description location start end',
+      { owner: req.user._id }
+    );
+    // eslint-disable-next-line no-return-assign
+    updates.forEach(update => (job[update] = req.body[update]));
+    await job.save();
+    return res.redirect('/users/job/list');
+  } catch (error) {
+    return next(error);
+  }
+};

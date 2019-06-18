@@ -211,14 +211,20 @@ exports.postUpdateJob = async (req, res, next) => {
     req.flash('error', 'Operation not allowed');
     return res.redirect('/job/create');
   }
+
   try {
     const job = await Job.findById(
       req.params.id,
       'title description location start end',
       { owner: req.user._id }
     );
-    // eslint-disable-next-line no-return-assign
-    updates.forEach(update => (job[update] = req.body[update]));
+    job.title = title;
+    job.description = description;
+    job.location.street = street;
+    job.location.city = city;
+    job.location.zip = zip;
+    job.start = moment(datepickerStart, 'DD-MM-YYYY').format();
+    job.end = moment(datepickerEnd, 'DD-MM-YYYY').format();
     await job.save();
     return res.redirect('/users/job/list');
   } catch (error) {

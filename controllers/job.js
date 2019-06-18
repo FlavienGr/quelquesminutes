@@ -76,11 +76,7 @@ exports.postCreateJob = async (req, res, next) => {
   });
   try {
     await job.save();
-    return res.render('job/userJobList', {
-      pageTitle: 'List Job',
-      error: '',
-      errorMessage: ''
-    });
+    return res.redirect('/users/job/list');
   } catch (error) {
     return next(error);
   }
@@ -227,7 +223,22 @@ exports.postUpdateJob = async (req, res, next) => {
     job.end = moment(datepickerEnd, 'DD-MM-YYYY').format();
     await job.save();
     return res.redirect('/users/job/list');
-  } catch (error) {
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
+    return next(error);
+  }
+};
+exports.deleteJobByIdOwner = async (req, res, next) => {
+  try {
+    await Job.findOneAndDelete({
+      _id: req.params.id,
+      owner: req.user._id
+    });
+    return res.redirect('/users/job/list');
+  } catch (err) {
+    const error = new Error(err);
+    error.httpStatusCode = 500;
     return next(error);
   }
 };

@@ -91,4 +91,5 @@ router.post(
   ],
   jobController.postUpdateJob
 );
+router.get('/users/job/delete/:id', auth, jobController.deleteJobByIdOwner);
 module.exports = router;

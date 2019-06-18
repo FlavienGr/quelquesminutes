@@ -12,9 +12,9 @@
               </div>
               <div class="card-body">
                 <p class="card-text"><%= job.description %></p>
-                <p class="card-text"><%= job.city %></p>
-                <p class="card-text"><%= job.street %></p>
-                <p class="card-text"><%= job.zip %></p>
+                <p class="card-text"><%= job.location.city %></p>
+                <p class="card-text"><%= job.location.street %></p>
+                <p class="card-text"><%= job.location.zip %></p>
                 <p class="card-text"><%= moment(job.start).format('DD/MM/YYYY') %></p>
                 <p class="card-text"><%= moment(job.end).format('DD/MM/YYYY') %></p>
                 <a href="/users/job/<%= job._id %>" class="btn btn-primary">See</a>

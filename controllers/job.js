@@ -90,7 +90,7 @@ exports.getJobList = async (req, res, next) => {
   try {
     const list = await Job.find(
       { owner: req.user._id },
-      'title description city street zip start end'
+      'title description location start end'
     );
     return res.render('job/userJobList', {
       pageTitle: 'List Job',
@@ -107,7 +107,7 @@ exports.getJobByIdOwner = async (req, res, next) => {
   try {
     const job = await Job.findById(
       req.params.id,
-      'title description city street zip start end',
+      'title description location start end',
       { owner: req.user._id }
     );
     return res.render('job/ownerJob', {

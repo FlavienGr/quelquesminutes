@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const Job = require('./Job');
 
 const UserSchema = new mongoose.Schema(
   {
@@ -130,7 +131,11 @@ UserSchema.pre('save', async function (next) {
   }
   next();
 });
-
+// eslint-disable-next-line func-names
+UserSchema.pre('remove', async function (next) {
+  await Job.deleteMany({ owner: this._id });
+  next();
+});
 const User = mongoose.model('Users', UserSchema);
 
 module.exports = User;

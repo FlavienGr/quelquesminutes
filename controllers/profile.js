@@ -49,8 +49,6 @@ exports.postEditPage = async (req, res, next) => {
   const {
     username, email, street, city, zip
   } = req.body;
-  console.log(req.body, 'body');
-
   const errorCheck = validationResult(req);
 
   if (!errorCheck.isEmpty()) {

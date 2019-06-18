@@ -63,7 +63,7 @@ app.use(csrfProtection);
 app.use((req, res, next) => {
   res.locals.csrfToken = req.csrfToken();
   res.locals.isAuthenticated = req.session.isLoggedIn;
-  // res.locals.csrfToken = req.csrfToken();
+  res.locals.isAssociation = req.session.isAssociation;
   next();
 });
 app.use(globalRouter);

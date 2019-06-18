@@ -51,13 +51,13 @@ exports.postSignup = async (req, res, next) => {
     await user.save();
     req.session.user = user._id;
     req.session.isLoggedIn = true;
+    req.session.isAssociation = !!user.isAssociation;
     return res.redirect('/');
   } catch (error) {
     return next(error);
   }
 };
 exports.getLogin = (req, res) => {
-  console.log(req);
   let errorFlashMessage = req.flash('error');
 
   if (errorFlashMessage.length > 0) {

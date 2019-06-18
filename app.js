@@ -89,6 +89,13 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3090;
 app.listen(PORT, () => {
+  const displayMessage = `
+  ############################
+  #   Quelquesmintutes started    #
+  ############################
+  # Port: ${PORT}
+  ############################
+  `;
   // eslint-disable-next-line no-console
-  console.log(`Listen on port: ${PORT}`);
+  console.log(displayMessage);
 });

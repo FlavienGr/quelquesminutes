@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+  redis:
+    image: 'redis:latest'
+    restart: always
+    ports:
+      - "6379:6379"
+  app:
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - "5000:5000"
+    env_file:
+     - ./config/docker.env

@@ -37,8 +37,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const optionsRedis = {
-  host: 'localhost',
-  port: 6379,
   client: redisClient,
   ttl: 86400
 };
@@ -87,7 +85,7 @@ app.use((err, req, res, next) => {
 });
 // //////
 
-const PORT = process.env.PORT || 3090;
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   const displayMessage = `
   ############################
@@ -96,6 +94,5 @@ app.listen(PORT, () => {
   # Port: ${PORT}
   ############################
   `;
-  // eslint-disable-next-line no-console
   console.log(displayMessage);
 });

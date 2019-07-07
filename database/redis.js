@@ -1,6 +1,10 @@
 const redis = require('redis');
 
-const redisClient = redis.createClient();
+const { REDIS_HOST, REDIS_PORT } = process.env;
+const redisClient = redis.createClient({
+  host: REDIS_HOST || 'localhost',
+  port: REDIS_PORT || 6379
+});
 
 redisClient.on('connect', () => {
   // eslint-disable-next-line no-console

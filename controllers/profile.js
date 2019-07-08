@@ -5,7 +5,7 @@ const User = require('../models/User');
 const { sendEmailChanged, sendToNewEmail } = require('../email/account');
 
 exports.getProfil = async (req, res) => {
-  const { username, email } = req.user;
+  const { username, email, address } = req.user;
   if (!req.user) {
     req.flash('error', 'unable to login you');
     return res.redirect('/login');
@@ -15,7 +15,10 @@ exports.getProfil = async (req, res) => {
     errors: '',
     profileData: {
       username,
-      email
+      email,
+      street: address.street,
+      city: address.city,
+      zip: address.zip
     }
   });
 };

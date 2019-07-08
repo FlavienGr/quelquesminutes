@@ -2,19 +2,20 @@
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-  <div class="container">
-    <div class="row">
-      <div class="col-6">Photo</div>
-      <div class="col-6">
+  <div class="container-fluid profile_page">
+    <div class="row profile">
+      <div class="col-5">Photo</div>
+      <div class="col-3">
           <% if(profileData) { %>
-            <%= profileData.username %>
-            <%= profileData.email %>
+            <h3><%= profileData.username %></h3>
+            <p><%= profileData.street %></p>
+            <p><%= profileData.city %></p>
+            <p><%= profileData.zip %></p>
           <% } %>
-          <a href="/users/edit">Edit Profile</a>
+          <a href="/users/edit" class="button">Edit Profile</a>
       </div>
     </div>
-
   </div>
-
+  <%- include('../includes/footer.ejs') %>
   <%- include('../includes/scripts.ejs') %>
 </body>

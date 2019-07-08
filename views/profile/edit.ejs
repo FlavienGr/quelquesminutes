@@ -2,14 +2,24 @@
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-<div class="container">
+  <div class="container-fluid profile_edit">
     <% if(errorMessage || error) { %>
       <div class="alert alert-danger" role="alert">
          <%= errorMessage || error %>
       </div>
     <% } %>
-  <div class="row">
-    <div class="col-8 mx-auto">
+    <div class="row justify-content-center">
+      <div class="col-4">
+        <ul>
+            <li><a href="/users/profile/settings">Settings</a></li>
+            <% if(isAssociation) { %>
+              <li><a href="/users/job/list">My Job</a></li>
+            <% } %>
+            <li><a href="/users/profile" class="button_see-profile">Voir Profile</a></li>
+        </ul>
+
+      </div>
+      <div class="col-7">
         <form action="/users/edit" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="card">
@@ -75,12 +85,13 @@
 
             </div>
 
-          </div>
-          <button type="submit" class="btn btn-primary">Save</button>
-        </form>
+            <button type="submit" class="btn button_edit-profile">Save</button>
+          </form>
+      </div>
     </div>
   </div>
 
 
+  <%- include('../includes/footer.ejs') %>
   <%- include('../includes/scripts.ejs') %>
 </body>

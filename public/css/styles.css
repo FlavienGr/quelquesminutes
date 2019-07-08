@@ -22,16 +22,46 @@ section {
   margin-bottom: 100px;
 }
 /*  Button -------------------------------*/
-.button_home {
+.button {
   background-color: #ff8c42;
   border-radius: 20px !important;
   padding: 10px 20px !important;
   color: #f7f7f7 !important;
+  border: none;
 }
 .button_signup {
   margin: 0 1rem;
+  border: none;
 }
-/*  Home -------------------------------*/
+.button_edit-profile,
+.button_settings {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  margin-left: 0 !important;
+  background-color: #ff8c42;
+  border-radius: 3px;
+  padding: 10px 20px !important;
+  color: #f7f7f7 !important;
+  border: none;
+}
+.button_see-profile {
+  padding: 10px 20px !important;
+  border-radius: 3px;
+  border: 1px solid black;
+}
+.btn_delete {
+  border: none;
+  text-align: center;
+  margin-left: 1rem !important;
+  background-color: #d3393e;
+}
+/*  Form -------------------------------*/
+.card,
+input {
+  background-color: inherit !important;
+}
+
+/*  Home Page-------------------------------*/
 /*  Section presentation -------------------------------*/
 .presentation .title_message_presentation,
 .message_presentation,
@@ -53,7 +83,7 @@ section {
 /*  Footer -------------------------------*/
 footer {
   background-color: #2b2b2b;
-  height: auto;
+  height: 4rem;
   text-align: center;
 }
 footer ul li {
@@ -70,4 +100,37 @@ footer a {
 }
 .footer_link {
   padding: 1rem;
+}
+
+/*  Profile Page -------------------------------*/
+.profile {
+  justify-content: center;
+}
+.profile h3,
+p {
+  margin: 2rem 0;
+}
+.card,
+.profile_edit ul {
+  margin-top: 5rem;
+}
+.profile_edit ul li {
+  list-style: none;
+  margin-bottom: 1rem;
+}
+.profile_edit ul li:last-child {
+  margin-top: 2rem !important;
+}
+.profile_edit,
+.profile_page {
+  min-height: calc(100vh - 5rem);
+  background-color: #f7f7f7 !important;
+}
+
+/*  Settings Page -------------------------------*/
+.settings {
+  background-color: #f7f7f7 !important;
+}
+.settings .card {
+  margin: 1rem 0;
 }

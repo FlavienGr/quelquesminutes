@@ -145,11 +145,13 @@ p {
   margin: 1rem 0;
 }
 
-/*  Signup Page -------------------------------*/
-.signup_page {
+/*  Signup and Login Page -------------------------------*/
+.signup_page,
+.login_page {
   min-height: calc(100vh - 5rem);
   background-color: #f7f7f7 !important;
 }
-.signup_page form {
+.signup_page form,
+.login_page form {
   margin-top: 5rem;
 }

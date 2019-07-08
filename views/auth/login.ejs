@@ -2,7 +2,7 @@
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-  <div class="container">
+  <div class="container-fluid login_page">
       <% if(errors) { %>
         <div class="alert alert-danger" role="alert">
            <%= errors %>
@@ -20,7 +20,6 @@
                   class="form-control"
                   id="email-input"
                   aria-describedby="emailHelp"
-                  placeholder="Enter email"
                   value="<% if (inputBackUp) {%><%= inputBackUp.email %><% } %>"
                   required>
                   <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
@@ -32,17 +31,16 @@
                   name="password"
                   class="form-control"
                   id="password-input"
-                  placeholder="Password"
                   value="<% if (inputBackUp) {%><%= inputBackUp.password %><% } %>"
                   required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="button_signup_page">Submit</button>
               </form>
               <a href="/reset-password">Forgot password?</a>
         </div>
       </div>
     </div>
-
+  <%- include('../includes/footer.ejs') %>
   <%- include('../includes/scripts.ejs') %>
 </body>

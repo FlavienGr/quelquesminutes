@@ -2,9 +2,54 @@
 </head>
 <body>
   <%- include('./includes/navigation.ejs') %>
-<p>Home Page</p>
-<p>Don't be shy , try to help some assiocations</p>
-
+  <div class="container">
+    <section class="presentation">
+      <div class="row justify-content-between">
+        <div class="col-8">
+          <h1 class="title_message_presentation">Devenez volontaire et aidez les associations</h1>
+          <p class="message_presentation">Assistez d'autres personnes et les aider à atteindre leurs objectifs vous rendra meilleur.</p>
+          <a href="#" class="button_home button_message_presentation">Commencez</a>
+        </div>
+      </div>
+    </section>
+    <section class="steps">
+      <div class="row justify-content-center">
+        <div class="col-8">
+          <h2 class="steps_title">Comment ça marche?</h2>
+          <p>Rencontrer du monde, s'ouvrir aux autres, se sentir utile, developper ou acquérir des compétences font partie des benefices du bénévolat. Devenir volontaire vous aidera à devenir le meilleur de vous-même.</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          image
+        </div>
+        <div class="col-4 step">
+          <h3>1ère étape</h3>
+          <p>Effectuer une recherche pour trouver une association proche de chez vous</p>
+          <a href="#" class="button_home">Recherchez</a>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-4 step">
+            <h3>2ème étape</h3>
+            <p>Consultez la page de l'association. Vous pourrez ainsi découvrir les jobs qu'elle propose</p>
+          </div>
+          <div class="col-8">
+            image
+          </div>
+        </div>
+      <div class="row">
+          <div class="col-8">
+            image
+          </div>
+          <div class="col-4 step">
+              <h3>3ème étape</h3>
+              <p>Contactez l'association sans plus attendre et devenez volontaire.</p>
+            </div>
+        </div>
+    </section>
+  </div>
+  <%- include('./includes/footer.ejs') %>
   <%- include('./includes/scripts.ejs') %>
 </body>
 </html>

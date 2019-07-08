@@ -1,0 +1,73 @@
+/* background color first #eee*/
+/* background color second #f7f7f7*/
+/* color text footer #999*/
+
+html {
+  letter-spacing: 1px;
+}
+body {
+  background-color: #eee !important;
+}
+a {
+  color: black !important;
+}
+nav {
+  height: 5rem;
+}
+nav a {
+  margin-left: 20px !important;
+}
+/*  section -------------------------------*/
+section {
+  margin-bottom: 100px;
+}
+/*  Button -------------------------------*/
+.button_home {
+  background-color: #ff8c42;
+  border-radius: 20px !important;
+  padding: 10px 20px !important;
+  color: #f7f7f7 !important;
+}
+.button_signup {
+  margin: 0 1rem;
+}
+/*  Home -------------------------------*/
+/*  Section presentation -------------------------------*/
+.presentation .title_message_presentation,
+.message_presentation,
+.button_message_presentation {
+  margin: 3rem 0;
+}
+/*  Section Steps -------------------------------*/
+.step > * {
+  margin-bottom: 2rem;
+}
+.steps_title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.steps > .row {
+  margin-bottom: 3rem;
+}
+
+/*  Footer -------------------------------*/
+footer {
+  background-color: #2b2b2b;
+  height: auto;
+  text-align: center;
+}
+footer ul li {
+  list-style: none;
+  display: inline-block !important;
+  margin: 0 1.5rem;
+}
+footer ul {
+  margin: 0;
+}
+footer a {
+  color: #999 !important;
+  text-decoration: none !important;
+}
+.footer_link {
+  padding: 1rem;
+}

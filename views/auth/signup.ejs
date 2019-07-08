@@ -2,7 +2,7 @@
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-<div class="container">
+<div class="container-fluid signup_page">
   <% if(errors) { %>
     <div class="alert alert-danger" role="alert">
        <%= errors %>
@@ -61,12 +61,16 @@
               <small id="passwordHelp" class="form-text text-muted">Minimum 8 characters.</small>
             </div>
 
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn button_signup_page">Submit</button>
           </form>
-          <a class="nav-link" href="/login">Already an account ? click here</a>
     </div>
   </div>
+  <div class="row">
+      <div class="col-6 mx-auto my-2">
+          <a href="/login">Already an account ?</a>
+      </div>
+  </div>
 </div>
-
+<%- include('../includes/footer.ejs') %>
   <%- include('../includes/scripts.ejs') %>
 </body>

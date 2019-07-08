@@ -44,6 +44,16 @@ section {
   color: #f7f7f7 !important;
   border: none;
 }
+.button_signup_page {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0 !important;
+  background-color: #ff8c42;
+  border-radius: 3px;
+  padding: 10px 20px !important;
+  color: #f7f7f7 !important;
+  border: none;
+}
 .button_see-profile {
   padding: 10px 20px !important;
   border-radius: 3px;
@@ -133,4 +143,13 @@ p {
 }
 .settings .card {
   margin: 1rem 0;
+}
+
+/*  Signup Page -------------------------------*/
+.signup_page {
+  min-height: calc(100vh - 5rem);
+  background-color: #f7f7f7 !important;
+}
+.signup_page form {
+  margin-top: 5rem;
 }

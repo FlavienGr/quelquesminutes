@@ -31,8 +31,8 @@ const sendResetPassword = (email, name, token) => {
 <h2>Hi ${name},</h2>
 <p>Forgot your password? No worries.</p>
 
-<p>You can reset your password immediately by <a href="http://localhost:3090/change-password/${token}">clicking here</a> or pasting the following link in your browser:</p>
-<p>http://localhost:3090/change-password/${token}</p>
+<p>You can reset your password immediately by <a href="http://localhost:5000/change-password/${token}">clicking here</a> or pasting the following link in your browser:</p>
+<p>http://localhost:5000/change-password/${token}</p>
 
 <p>If you run into any other problems, drop us a line at help@quelquesminutes.com.</p>
 
@@ -48,7 +48,7 @@ const sendPasswordChanged = (email) => {
     subject: 'Success! Your password has been changed.',
     html: `
     <h1>You've got yourself a new password!</h1>
-    <p>We just wanted to let you know that your password has been changed successfully. If you did not make this change, please <a href="http://localhost:3090/contact-us">let us know</a> as soon as possible. We will look into what's happened.</p>
+    <p>We just wanted to let you know that your password has been changed successfully. If you did not make this change, please <a href="http://localhost:5000/contact-us">let us know</a> as soon as possible. We will look into what's happened.</p>
 
     Cheers,
     `
@@ -65,7 +65,7 @@ const sendEmailChanged = (email, newEmail) => {
     <p>We noticed the email address for your QuelquesMinutes account was recently changed. If this was you, you can safely disregard this email.</p>
     <h2>Email address changed to: ${newEmail}</h2>
 
-    <p>If you did not make this change, please <a href="http://localhost:3090/contact-us">let us know</a> as soon as possible. We will look into what's happened.</p>
+    <p>If you did not make this change, please <a href="http://localhost:5000/contact-us">let us know</a> as soon as possible. We will look into what's happened.</p>
 
     Thanks,
     `

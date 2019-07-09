@@ -71,7 +71,7 @@ exports.getLogin = (req, res) => {
     inputBackUp: {}
   });
 };
-// eslint-disable-next-line consistent-return
+
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const errors = validationResult(req);
@@ -94,9 +94,9 @@ exports.postLogin = async (req, res, next) => {
     }
     req.session.user = user._id;
     req.session.isLoggedIn = true;
+    req.session.isAssociation = !!user.isAssociation;
     res.redirect('/');
   } catch (error) {
-    // eslint-disable-next-line no-console
     console.log(error);
     return next(error);
   }

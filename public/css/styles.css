@@ -73,6 +73,9 @@ section {
   background-color: #d3393e;
 }
 /*  Form -------------------------------*/
+.dropdown-menu {
+  background-color: #eee;
+}
 .card,
 input {
   background-color: inherit !important;

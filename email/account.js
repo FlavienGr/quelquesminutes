@@ -1,11 +1,12 @@
 const sgMail = require('@sendgrid/mail');
 
+const { EMAIL_FROM } = process.env;
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 const sendWelcomeEmail = (email, name) => {
   const msg = {
     to: `${email}`,
-    from: 'zencles75@gmail.com',
+    from: `${EMAIL_FROM}`,
     subject: 'Sending with SendGrid is Fun',
     text: `Welcome to the app, ${name}. Let me now how you get along with the app`,
     html: `<strong>Welcome to the app, ${name}.</strong>`
@@ -15,7 +16,7 @@ const sendWelcomeEmail = (email, name) => {
 const sendQuitEmail = (email, name) => {
   const msg = {
     to: `${email}`,
-    from: 'zencles75@gmail.com',
+    from: `${EMAIL_FROM}`,
     subject: 'Sending with SendGrid is Fun',
     text: `Sorry to see you leave, ${name}. Let me now why you get away from the app`
   };
@@ -24,7 +25,7 @@ const sendQuitEmail = (email, name) => {
 const sendResetPassword = (email, name, token) => {
   const msg = {
     to: `${email}`,
-    from: 'zencles75@gmail.com',
+    from: `${EMAIL_FROM}`,
     subject: 'Reset your Quelquesminutes password',
     html: `
 
@@ -44,7 +45,7 @@ Cheers,
 const sendPasswordChanged = (email) => {
   const msg = {
     to: `${email}`,
-    from: 'zencles75@gmail.com',
+    from: `${EMAIL_FROM}`,
     subject: 'Success! Your password has been changed.',
     html: `
     <h1>You've got yourself a new password!</h1>
@@ -58,7 +59,7 @@ const sendPasswordChanged = (email) => {
 const sendEmailChanged = (email, newEmail) => {
   const msg = {
     to: `${email}`,
-    from: 'zencles75@gmail.com',
+    from: `${EMAIL_FROM}`,
     subject: 'Account QuelquesMinutes.org: Email address changed.',
     html: `
     <h1>Did you change your email address?</h1>
@@ -75,7 +76,7 @@ const sendEmailChanged = (email, newEmail) => {
 const sendToNewEmail = (email) => {
   const msg = {
     to: `${email}`,
-    from: 'zencles75@gmail.com',
+    from: `${EMAIL_FROM}`,
     subject: 'Success! Your Email has been changed.',
     html: `
     <p>To complete the process of changing your email address, you must confirm your new address below:</p>

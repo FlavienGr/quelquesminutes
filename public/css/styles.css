@@ -44,7 +44,8 @@ section {
   color: #f7f7f7 !important;
   border: none;
 }
-.button_signup_page {
+.button_signup_page,
+.button_password {
   margin-top: 1rem;
   margin-bottom: 1rem;
   margin-left: 0 !important;
@@ -63,6 +64,12 @@ section {
   border: none;
   text-align: center;
   margin-left: 1rem !important;
+  background-color: #d3393e;
+}
+.btn_confirm {
+  border: none;
+  text-align: center;
+  padding: 0.45rem 1.4rem !important;
   background-color: #d3393e;
 }
 /*  Form -------------------------------*/
@@ -117,7 +124,7 @@ footer a {
   justify-content: center;
 }
 .profile h3,
-p {
+.profile p {
   margin: 2rem 0;
 }
 .card,
@@ -154,4 +161,32 @@ p {
 .signup_page form,
 .login_page form {
   margin-top: 5rem;
+}
+/*reset password, new pwd Page delete Page ------------------------*/
+
+.reset-password,
+.reset_pwd_instructions,
+.send_new_password,
+.delete_page {
+  min-height: calc(100vh - 5rem);
+  background-color: #f7f7f7 !important;
+}
+
+.reset-password form {
+  margin-top: 5rem;
+}
+/*create Job Page ------------------------*/
+.create_job,
+.job_list {
+  min-height: calc(100vh - 5rem);
+  background-color: #f7f7f7 !important;
+}
+#description-input {
+  background-color: #f7f7f7 !important;
+}
+.create_job .card:last-child {
+  margin-bottom: 2rem !important;
+}
+.section_button_create-job {
+  margin: 2rem 0;
 }

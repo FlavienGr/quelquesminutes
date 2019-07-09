@@ -2,28 +2,40 @@
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-    List page
-    <div class="container">
+    <div class="container-fluid job_list">
+      <div class="row">
       <% if(list.length > 0) { %>
         <% list.forEach(job => { %>
+            <div class="col-8 mx-auto">
           <div class="card">
               <div class="card-header">
                 <%= job.title %>
               </div>
               <div class="card-body">
                 <p class="card-text"><%= job.description %></p>
-                <p class="card-text"><%= job.location.city %></p>
-                <p class="card-text"><%= job.location.street %></p>
-                <p class="card-text"><%= job.location.zip %></p>
-                <p class="card-text"><%= moment(job.start).format('DD/MM/YYYY') %></p>
-                <p class="card-text"><%= moment(job.end).format('DD/MM/YYYY') %></p>
-                <a href="/users/job/<%= job._id %>" class="btn btn-primary">See</a>
+                <div class="row justify-content-between">
+                  <div class="col-6 my-3">
+                      <p class="card-text"><%= job.location.street %> à <%= job.location.city %> <%= job.location.zip %></p>
+                  </div>
+                  <div class="col-6 my-3">
+                      <p class="card-text text-center">Du <%= moment(job.start).format('DD/MM/YYYY') %> au <%= moment(job.end).format('DD/MM/YYYY') %></p>
+                  </div>
+                </div>
+                <a href="/users/job/<%= job._id %>" class="button_settings">Voir</a>
               </div>
             </div>
+          </div>
         <% }); %>
         <% } else { %>
           <h1>No Job Found!</h1>
         <% } %>
-    <a href="/job/create" class="btn btn-primary">Create Job</a>
+      </div>
+      <div class="row">
+        <div class="col-8 mx-auto section_button_create-job">
+          <a href="/job/create" class="button_settings">Create Job</a>
+        </div>
+      </div>
+  </div>
+  <%- include('../includes/footer.ejs') %>
   <%- include('../includes/scripts.ejs') %>
 </body>

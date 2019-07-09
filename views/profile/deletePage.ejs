@@ -2,35 +2,32 @@
 </head>
 <body>
   <%- include('../includes/navigation.ejs') %>
-  <div class="container">
+  <div class="container-fluid delete_page">
       <% if(errors) { %>
         <div class="alert alert-danger" role="alert">
            <%= errors %>
           </div>
       <% } %>
       <div class="row">
-        <div class="col-4 mx-auto">
+        <div class="col-4 mx-auto my-3">
           <form action="/users/delete/confirm" method="POST">
-          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <div class="form-group">
-                  <label for="password">Password</label>
-                  <input
-                  type="password"
-                  name="password"
-                  class="form-control"
-                  id="password-input"
-                  placeholder="Password"
-                  required>
-                </div>
-
-                <div class="row justify-content-around">
-                    <button type="submit" class="btn btn-danger">Confirm</button>
-                    <a href="/" class="btn btn-primary">Cancel</a>
-                </div>
-              </form>
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                type="password"
+                name="password"
+                class="form-control"
+                id="password-input"
+                required>
+              </div>
+                <button type="submit" class="button_settings btn_confirm">Confirm</button>
+                <a href="/" class="button_settings">Cancel</a>
+            </form>
+          </div>
         </div>
       </div>
     </div>
-
+  <%- include('../includes/footer.ejs') %>
   <%- include('../includes/scripts.ejs') %>
 </body>

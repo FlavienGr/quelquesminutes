@@ -83,16 +83,5 @@ app.use((err, req, res, next) => {
     pageTitle: '500'
   });
 });
-// //////
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  const displayMessage = `
-  ############################
-  #   Quelquesmintutes started    #
-  ############################
-  # Port: ${PORT}
-  ############################
-  `;
-  console.log(displayMessage);
-});
+module.exports = app;

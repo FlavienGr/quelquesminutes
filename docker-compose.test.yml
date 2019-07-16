@@ -10,8 +10,8 @@ services:
     container_name: cypress
     depends_on:
       - app
-    environment:
-      - CYPRESS_baseUrl=http://app:5000
+    env_file:
+      - ./config/docker-test.env
     volumes:
       - ./e2e/cypress:/app/cypress
       - ./e2e/cypress.json:/app/cypress.json

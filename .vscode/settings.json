@@ -2,5 +2,11 @@
   "editor.formatOnSave": true,
   "javascript.format.enable": false,
   "prettier.eslintIntegration": true,
-  "typescript.validate.enable": false
+  "typescript.validate.enable": false,
+  "json.schemas": [
+    {
+      "fileMatch": ["cypress.json"],
+      "url": "https://on.cypress.io/cypress.schema.json"
+    }
+  ]
 }

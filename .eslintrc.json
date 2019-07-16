@@ -25,6 +25,7 @@
     "consistent-return": "off",
     "func-names": "off",
     "no-console": "warn",
-    "no-return-await": "off"
+    "no-return-await": "off",
+    "prefer-arrow-callback": "off"
   }
 }

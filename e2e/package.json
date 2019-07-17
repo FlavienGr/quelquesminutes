@@ -4,6 +4,7 @@
   "description": "Cypress tests",
   "main": "index.js",
   "scripts": {
+    "db:seed": "node utils/seed.js",
     "db:delete": "node utils/deleteUsers.js",
     "test": "cypress run"
   },

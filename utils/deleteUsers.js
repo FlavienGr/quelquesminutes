@@ -16,8 +16,6 @@ db.once('open', () => {
 const User = require('../models/User');
 
 const deleteUsers = async () => {
-  console.log('exec');
-  console.log(process.NODE_ENV, 'nodeenv');
   await User.deleteMany();
   return db.close(err => console.log(err));
 };

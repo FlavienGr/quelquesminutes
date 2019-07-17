@@ -7,6 +7,7 @@
     "start": "node server/index.js",
     "start:dev": "NODE_ENV=development nodemon server/index.js",
     "cy:open": "cypress open",
+    "db:seed": "env-cmd -f ./config/test.env node utils/seed.js",
     "db:delete": "env-cmd -f ./config/test.env node utils/deleteUsers.js",
     "test": "NODE_ENV=test concurrently \"npm run start\" \"npm run cy:open\"",
     "lint": "eslint '**/*.js'",

@@ -19,3 +19,16 @@ Cypress.Commands.add('login', (userType) => {
   cy.get('input[name=email]').type(user.email);
   cy.get('input[name=password]').type(`${user.password}{enter}`);
 });
+Cypress.Commands.add('createJob', () => {
+  cy.visit('/job/create');
+  cy.fixture('job.json').then((job) => {
+    cy.get('input[name=title]').type(job.title);
+    cy.get('textarea[name=description]').type(job.description);
+    cy.get('input[name=street]').type(job.street);
+    cy.get('input[name=city]').type(job.city);
+    cy.get('input[name=zip]').type(job.zip);
+    cy.get('input[name=datepickerStart]').type(job.start);
+    cy.get('input[name=datepickerEnd]').type(job.end);
+    cy.contains('Save').click();
+  });
+});

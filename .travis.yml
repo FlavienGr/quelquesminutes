@@ -1,8 +1,12 @@
 sudo: required
+cache:
+    directories:
+     - /node_modules
+     - ./e2e/node_modules
 services:
   - docker
 script:
-  - docker-compose -f docker-compose.ci.yml up -d
+  - docker-compose -f docker-compose.ci.yml up --build
   - docker-compose -f docker-compose.ci.yml down
 after_success:
   - docker build -t zencles/quelquesminutes-cypress ./e2e

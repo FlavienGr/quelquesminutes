@@ -63,4 +63,41 @@ describe('Job operations CRUD by association', () => {
       cy.contains('A night after a storm + UPDATED');
     });
   });
+  context('Should errors when create a job', () => {
+    it('Title & Description should have 5 characters min', () => {
+      cy.visit('/job/create');
+      cy.get('@job').then((job) => {
+        cy.get('input[name=title]').type('job');
+        cy.get('textarea[name=description]').type(job.description);
+        cy.get('input[name=street]').type(job.street);
+        cy.get('input[name=city]').type(job.city);
+        cy.get('input[name=zip]').type(job.zip);
+        cy.get('input[name=datepickerStart]').type(job.start);
+        cy.get('input[name=datepickerEnd]').type(job.end);
+        cy.contains('Save').click();
+        cy.get('.alert');
+        cy.get('input[name=title]').type(job.title);
+        cy.get('textarea[name=description]').clear();
+        cy.contains('Save').click();
+        cy.get('.alert');
+      });
+    });
+    it('datepickerStart & datepickerEnd should not be empty', () => {
+      cy.visit('/job/create');
+      cy.get('@job').then((job) => {
+        cy.get('input[name=title]').type(job.title);
+        cy.get('textarea[name=description]').type(job.description);
+        cy.get('input[name=street]').type(job.street);
+        cy.get('input[name=city]').type(job.city);
+        cy.get('input[name=zip]').type(job.zip);
+        cy.get('input[name=datepickerEnd]').type(job.end);
+        cy.contains('Save').click();
+        cy.get('.alert');
+        cy.get('input[name=datepickerEnd]').clear();
+        cy.get('input[name=datepickerStart]').type(job.start);
+        cy.contains('Save').click();
+        cy.get('.alert');
+      });
+    });
+  });
 });

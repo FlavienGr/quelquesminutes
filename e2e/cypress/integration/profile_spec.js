@@ -17,7 +17,7 @@ describe('Job operations CRUD by association', () => {
       cy.contains('Logout').click();
       cy.contains('Signup');
     });
-    it('Should click and direct profile page', () => {
+    it('Should click and being directed profile page', () => {
       cy.contains('Account').click();
       cy.contains('Profile').click();
       cy.url().should('contain', '/users/profile');
@@ -39,6 +39,14 @@ describe('Job operations CRUD by association', () => {
       cy.get('input[name=password]').type('thesummerisComing?');
       cy.contains('Confirm').click();
       cy.contains('Signup');
+    });
+    it('Should have an error message if wrong password', () => {
+      cy.contains('Account').click();
+      cy.contains('Settings').click();
+      cy.get('.btn_delete').click();
+      cy.get('input[name=password]').type('garbage');
+      cy.contains('Confirm').click();
+      cy.get('.alert');
     });
   });
 });

@@ -29,6 +29,10 @@ describe('Login page', () => {
     });
   });
   context('Error Login', () => {
+    beforeEach(() => {
+      cy.exec('npm run db:delete');
+      cy.visit('/login');
+    });
     it('Should be redirect home page after login', () => {
       cy.get('input[name=email]').type('garbage@fake.fr');
       cy.get('input[name=password]').type('sevenle');

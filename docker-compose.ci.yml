@@ -1,0 +1,33 @@
+version: '3'
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+  redis:
+    image: 'redis:latest'
+    restart: always
+    ports:
+      - "6379:6379"
+  app:
+    build:
+      dockerfile: Dockerfile.dev
+      context: .
+    environment:
+      - REDIS_HOST=$REDIS_HOST
+      - REDIS_PORT=$REDIS_PORT
+      - SESSION_REDIS_SECRET=$SESSION_REDIS_SECRET
+      - MONGO_DB_URI=$MONGO_DB_URI
+    ports:
+      - "5000:5000"
+  e2e:
+    build:
+      dockerfile: Dockerfile.dev
+      context: ./e2e
+    container_name: cypress
+    depends_on:
+      - app
+    environment:
+      - MONGO_DB_URI=$MONGO_DB_URI
+

@@ -14,9 +14,11 @@ db.once('open', () => {
 });
 
 const User = require('../models/User');
+const Job = require('../models/Job');
 
-const deleteUsers = async () => {
+const deleteDB = async () => {
   await User.deleteMany();
+  await Job.deleteMany();
   return db.close(err => console.log(err));
 };
-deleteUsers();
+deleteDB();

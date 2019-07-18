@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "db:seed": "node utils/seed.js",
-    "db:delete": "node utils/deleteUsers.js",
+    "db:delete": "node utils/deleteDB.js",
     "test": "cypress run"
   },
   "keywords": [],

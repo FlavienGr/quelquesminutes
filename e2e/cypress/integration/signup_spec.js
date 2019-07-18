@@ -30,4 +30,22 @@ describe('Signup page => elements and signup', () => {
       });
     });
   });
+  context('Errors Association registration => ', () => {
+    it('Username less than 5 and password lt 8 letters', () => {
+      cy.fixture('association.json').then((association) => {
+        cy.get('[type="checkbox"]').check();
+        cy.get('input[name=username]').type('four');
+        cy.get('input[name=email]').type(association.email);
+        cy.get('input[name=password]').type(association.password);
+        cy.get('.button_signup_page').click();
+        cy.get('.alert');
+        cy.get('input[name=username]').type(association.username);
+        cy.get('input[name=password]')
+          .clear()
+          .type('sevenle');
+        cy.get('.button_signup_page').click();
+        cy.get('.alert');
+      });
+    });
+  });
 });

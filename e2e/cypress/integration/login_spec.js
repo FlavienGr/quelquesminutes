@@ -28,4 +28,12 @@ describe('Login page', () => {
       cy.contains('Create job');
     });
   });
+  context('Error Login', () => {
+    it('Should be redirect home page after login', () => {
+      cy.get('input[name=email]').type('garbage@fake.fr');
+      cy.get('input[name=password]').type('sevenle');
+      cy.get('.button_signup_page').click();
+      cy.get('.alert');
+    });
+  });
 });

@@ -1,0 +1,19 @@
+sudo: required
+language: node_js
+node_js:
+  - "node"
+cache:
+  directories:
+    - ~/.npm
+    - ~/.cache
+services:
+  - docker
+script:
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml up -d --build
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml down
+after_success:
+  - docker build -t zencles/quelquesminutes .
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push zencles/quelquesminutes
+notifications:
+  email: true

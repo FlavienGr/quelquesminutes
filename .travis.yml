@@ -6,9 +6,9 @@ cache:
 services:
   - docker
 script:
-  - docker-compose -f docker-compose.ci.yml up --build
+  - docker-compose -f docker-compose.ci.yml up -d --build
 after_success:
-  - docker-compose -f docker-compose.ci.yml down
+  - docker-compose -f docker-compose.ci.yml down -v
   - docker build -t zencles/quelquesminutes .
   - docker build -t zencles/cypress-quelquesminutes ./e2e
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -16,4 +16,4 @@ after_success:
   - docker push zencles/cypress-quelquesminutes
   - echo "SUCCESS!"
 notifications:
-  email: true
+  email: false

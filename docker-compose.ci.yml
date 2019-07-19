@@ -22,7 +22,8 @@ services:
     ports:
       - "5000:5000"
     depends_on:
-      - e2e
+      - redis
+      - mongo
   e2e:
     build:
       dockerfile: Dockerfile.dev

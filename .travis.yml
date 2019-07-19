@@ -7,6 +7,7 @@ services:
   - docker
 script:
   - docker-compose -f docker-compose.ci.yml up -d --build
+  - docker-compose logs e2e
 after_success:
   - docker-compose -f docker-compose.ci.yml down -v
   - docker build -t zencles/quelquesminutes .

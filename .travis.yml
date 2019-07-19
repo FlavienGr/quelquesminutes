@@ -7,13 +7,13 @@ services:
   - docker
 script:
   - docker-compose -f docker-compose.ci.yml up --build
-  - docker-compose -f docker-compose.ci.yml down
 after_success:
-  - docker build -t zencles/quelquesminutes-cypress ./e2e
+  - docker-compose -f docker-compose.ci.yml down
   - docker build -t zencles/quelquesminutes .
+  - docker build -t zencles/cypress-quelquesminutes ./e2e
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker push zencles/quelquesminutes
-  - docker push zencles/quelquesminutes-cypress
+  - docker push zencles/cypress-quelquesminutes
   - echo "SUCCESS!"
 notifications:
   email: true

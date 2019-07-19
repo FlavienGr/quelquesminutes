@@ -1,13 +1,14 @@
 sudo: required
 cache:
-    directories:
-     - /node_modules
-     - ./e2e/node_modules
+  # cache both npm modules and Cypress binary
+  directories:
+    - ~/.npm
+    - ~/.cache
 services:
   - docker
 script:
   - docker-compose -f docker-compose.ci.yml up -d --build
-  - docker-compose logs e2e
+  - docker-compose logs quelquesminutes_e2e
 after_success:
   - docker-compose -f docker-compose.ci.yml down -v
   - docker build -t zencles/quelquesminutes .
